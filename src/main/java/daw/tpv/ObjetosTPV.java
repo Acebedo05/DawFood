@@ -5,12 +5,13 @@ package daw.tpv;
  * @author acebedo
  */
 public class ObjetosTPV {
-    public static void main(String[] args) {
-        
-        // Crear los productos.
-        FuncionesTPV TPV1 = new FuncionesTPV();
-        FuncionesTPV TPV2 = new FuncionesTPV();
-        FuncionesTPV TPV3 = new FuncionesTPV();
+
+    public static FuncionesTPV inicializarTPV() {
+        // Crear instancias de AtributosTPV y FuncionesTPV
+        AtributosTPV atributosTPV = new AtributosTPV("Estepona", null);
+        FuncionesTPV funcionesTPV = new FuncionesTPV(atributosTPV);
+
+        return funcionesTPV;
     }
-    
+
 }
