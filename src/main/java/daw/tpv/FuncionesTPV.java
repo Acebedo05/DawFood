@@ -1,6 +1,8 @@
 package daw.tpv;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import java.util.Random;
 
 /**
@@ -15,6 +17,7 @@ public class FuncionesTPV {
         this.atributosTPV = atributosTPV;
     }
 
+    // REVISAR REVIASR REVISAR
     // Método para encender el TPV, mostrando un mensaje de bienvenida y permitiendo seleccionar el modo.
     public void encenderTPV() {
         String mensajeInicio = "¡Bienvenido al TPV!\n"
@@ -24,46 +27,67 @@ public class FuncionesTPV {
 
         JOptionPane.showMessageDialog(null, mensajeInicio);
 
-        String opcionSeleccionada = JOptionPane.showInputDialog(
+        // Creamos un panel con los botones
+        JPanel panel = new JPanel();
+        JButton botonUsuario = new JButton("Modo Usuario");
+        JButton botonAdmin = new JButton("Modo Administrador");
+        panel.add(botonUsuario);
+        panel.add(botonAdmin);
+
+        // Agregamos ActionListener para los botones
+        botonUsuario.addActionListener(e -> iniciarModoUsuario());
+        botonAdmin.addActionListener(e -> iniciarModoAdmin());
+
+        // Mostramos el JOptionPane con el panel y los botones
+        int opcionSeleccionada = JOptionPane.showOptionDialog(
                 null,
-                "Seleccione una opción:\n\n"
-                + "1. Modo Usuario\n"
-                + "2. Modo Administrador"
-        );
-
-        switch (opcionSeleccionada) {
-            case "Modo Usuario" ->
-                iniciarModoUsuario();
-            case "Modo Administrador" ->
-                iniciarModoAdmin();
-            default ->
-                JOptionPane.showMessageDialog(null, "Opción no válida");
-        }
+                panel,
+                "Seleccione una opción",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                new Object[]{},
+                null);
     }
+    // REVISAR REVIASR REVISAR
 
-    // Método para iniciar el modo de usuario (CAMBIAR A SOUT).
+    // Método para iniciar el modo de usuario.
     public void iniciarModoUsuario() {
-        JOptionPane.showMessageDialog(null, "Modo Usuario Iniciado");
+        System.out.println("Modo Usuario Iniciado");
     }
 
     // Método para iniciar el modo de administrador, generando o solicitando la contraseña de administrador.
     public void iniciarModoAdmin() {
         String password;
-        if (atributosTPV.getPasswordAdmin() == null || atributosTPV.getPasswordAdmin().isEmpty()) {
-            // Si la contraseña de administrador aún no se ha generado, se crea una nueva.
-            password = generarPasswordAleatoria();
-            atributosTPV.setPasswordAdmin(password);
-            JOptionPane.showMessageDialog(null, "Contraseña de administrador generada: " + password);
-        } else {
-            // Si ya hay una contraseña de administrador creada, se solicita.
-            password = JOptionPane.showInputDialog(null, "Ingrese la contraseña de administrador:");
+        int intentosMaximos = 3;
+        int intentos = 0;
+
+        do {
+            if (atributosTPV.getPasswordAdmin() == null || atributosTPV.getPasswordAdmin().isEmpty()) {
+                // Si la contraseña de administrador aún no se ha generado, se crea una nueva.
+                password = generarPasswordAleatoria();
+                atributosTPV.setPasswordAdmin(password);
+                System.out.println("Contraseña de administrador generada: " + password);
+                password = JOptionPane.showInputDialog(null, "Ingrese la contraseña de administrador:");
+            } else {
+                // Si ya hay una contraseña de administrador creada, se solicita.
+                password = JOptionPane.showInputDialog(null, "Ingrese la contraseña de administrador:");
+            }
+
+            if (password != null && validarPasswordAdmin(password)) {
+                System.out.println("Modo Administrador Iniciado");
+                break;  // Sale del bucle si la contraseña es correcta.
+            } else {
+                intentos++;
+                JOptionPane.showMessageDialog(null, "Contraseña incorrecta. Intento " + intentos + " de " + intentosMaximos);
+            }
+        } while (intentos < intentosMaximos);
+
+        if (intentos == intentosMaximos) {
+            JOptionPane.showMessageDialog(null, "Número máximo de intentos alcanzado. No se puede acceder al modo administrador.");
+            encenderTPV();
         }
 
-        if (password != null && validarPasswordAdmin(password)) {
-            JOptionPane.showMessageDialog(null, "Modo Administrador Iniciado");
-        } else {
-            JOptionPane.showMessageDialog(null, "Contraseña incorrecta. No se puede acceder al modo administrador.");
-        }
     }
 
     // Método para realizar una compra (REVISAR).
@@ -78,7 +102,7 @@ public class FuncionesTPV {
             - 1 Letra minúscula.
             - 1 Número.
             - 1 Carácter especial.
-    */
+     */
     private boolean validarPasswordAdmin(String password) {
         // Validar que la contraseña cumpla con los requisitos.
         boolean tieneMinuscula = false;
@@ -99,7 +123,7 @@ public class FuncionesTPV {
         }
 
         if (!(tieneMinuscula && tieneMayuscula && tieneNumero && tieneCaracterEspecial)) {
-            JOptionPane.showMessageDialog(null, "La contraseña no cumple con los criterios especificados.");
+            System.out.println("Contraseña incorrecta. No se puede acceder al modo administrador.");
             return false;
         }
 
