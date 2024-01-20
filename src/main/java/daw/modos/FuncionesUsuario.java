@@ -6,6 +6,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import daw.productos.MenuComida;
+import daw.productos.MenuBebida;
+import daw.productos.MenuPostre;
 
 /**
  *
@@ -17,17 +19,32 @@ public class FuncionesUsuario {
     public void menuSeleccion() {
         // Crear la ventana del menú.
         JFrame frame = new JFrame("Menú de Selección");
-        
+
         // Crear un panel para colocar los botones.
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         // Crear botones para cada opción del menú.
         // Asociar ActionListener a cada botón.
-        agregarBoton(panel, "Ver Carrito", e -> verCarrito());
-        agregarBoton(panel, "Ver Tipos Comidas", e -> verTipoComida());
-        agregarBoton(panel, "Ver Tipos Bebidas", e -> verTipoBebida());
-        agregarBoton(panel, "Ver Postres", e -> verPostres());
-        agregarBoton(panel, "No Comprar", e -> noComprar());
+        agregarBoton(panel, "Ver Tipos Comidas", e -> {
+            verTipoComida();
+            frame.dispose();
+        });
+        agregarBoton(panel, "Ver Tipos Bebidas", e -> {
+            verTipoBebida();
+            frame.dispose();
+        });
+        agregarBoton(panel, "Ver Postres", e -> {
+            verPostres();
+            frame.dispose();
+        });
+        agregarBoton(panel, "Ver Carrito", e -> {
+            verCarrito();
+            frame.dispose();
+        });
+        agregarBoton(panel, "No Comprar", e -> {
+            noComprar();
+            frame.dispose();
+        });
 
         frame.add(panel);
         frame.setSize(400, 130);
@@ -52,22 +69,33 @@ public class FuncionesUsuario {
         System.out.println("verCarrito");
     }
 
+    private MenuComida menuComida;
+    private MenuBebida menuBebida;
+    private MenuPostre menuPostre;
+
+    // Constructor que recibe referencias a los objetos MenuComida, MenuBebida y MenuPostre.
+    public FuncionesUsuario(MenuComida menuComida, MenuBebida menuBebida, MenuPostre menuPostre) {
+        this.menuComida = menuComida;
+        this.menuBebida = menuBebida;
+        this.menuPostre = menuPostre;
+    }
+
     // Método para mostrar los tipos de comida al usuario.
     private void verTipoComida() {
-        // Por hacer
-        System.out.println("verTipoComida");
+        // Llamar al método MenuComida de la clase MenuComida.
+        menuComida.MenuComida();
     }
 
     // Método para mostrar los tipos de bebidas al usuario.
     private void verTipoBebida() {
-        // Por hacer
-        System.out.println("verTipoBebida");
+        // Llamar al método MenuBebida de la clase MenuBebida.
+        menuBebida.MenuBebida();
     }
 
     // Método para mostrar los postres al usuario.
     private void verPostres() {
-        // Por hacer
-        System.out.println("verPostres");
+        // Llamar al método MenuPostre de la clase MenuPostre.
+        menuPostre.MenuPostre();
     }
 
     // Método para que el usuario pueda cancelar la compra.
