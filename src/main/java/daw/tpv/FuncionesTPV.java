@@ -6,6 +6,9 @@ import javax.swing.JPanel;
 import java.util.Random;
 import javax.swing.JDialog;
 import daw.modos.FuncionesAdministrador;
+import daw.productos.MenuComida;
+import daw.productos.MenuBebida;
+import daw.productos.MenuPostre;
 
 /**
  *
@@ -62,10 +65,21 @@ public class FuncionesTPV {
         dialog.setVisible(true);
     }
 
-    // Método para iniciar el modo de usuario.
+// Método para iniciar el modo de usuario.
     public void iniciarModoUsuario() {
+        // Crear una instancia de la clase MenuComida.
+        MenuComida menuComida = new MenuComida();
+        
+        // Crear una instancia de la clase MenuBebida.
+        MenuBebida menuBebida = new MenuBebida();
+        
+        // Crear una instancia de la clase MenuPostre.
+        MenuPostre menuPostre = new MenuPostre();
+        
+        // Pasar la instancia de MenuComida al constructor de FuncionesUsuario.
+        daw.modos.FuncionesUsuario funcionesUsuario = new daw.modos.FuncionesUsuario(menuComida, menuBebida, menuPostre);
+
         // Llamar al método menuSeleccion de la clase FuncionesUsuario.
-        daw.modos.FuncionesUsuario funcionesUsuario = new daw.modos.FuncionesUsuario();
         funcionesUsuario.menuSeleccion();
     }
 
@@ -130,18 +144,18 @@ public class FuncionesTPV {
             // Si hay una letra minúscula, se pone true.
             if (Character.isLowerCase(caracter)) {
                 tieneMinuscula = true;
-            // Si hay una letra mayúscula, se pone true.
+                // Si hay una letra mayúscula, se pone true.
             } else if (Character.isUpperCase(caracter)) {
                 tieneMayuscula = true;
-            // Si hay un número, se pone true.
+                // Si hay un número, se pone true.
             } else if (Character.isDigit(caracter)) {
                 tieneNumero = true;
-            // Si hay un caracter especial, se pone true.
+                // Si hay un caracter especial, se pone true.
             } else if ("#$%&()*+,-.:;<=>@".indexOf(caracter) != -1) {
                 tieneCaracterEspecial = true;
             }
         }
-        
+
         // Si algino de los valores es false, no funciona.
         return tieneMinuscula && tieneMayuscula && tieneNumero && tieneCaracterEspecial;
     }
