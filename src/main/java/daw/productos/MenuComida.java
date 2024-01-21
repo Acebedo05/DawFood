@@ -1,11 +1,13 @@
 package daw.productos;
 
+import daw.tpv.FuncionesTPV;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -13,6 +15,13 @@ import javax.swing.JPanel;
  * @author acebedo
  */
 public class MenuComida {
+
+    private FuncionesTPV funcionesTPV;
+
+    public MenuComida(FuncionesTPV funcionesTPV) {
+        // Almacena la referencia a FuncionesTPV.
+        this.funcionesTPV = funcionesTPV;
+    }
 
     // Listas para almacenar las diferentes categorías de comidas.
     private List<Pizza> pizzas;
@@ -78,7 +87,7 @@ public class MenuComida {
             frame.dispose();
         });
         agregarBoton(panel, "Volver al menú de selección", e -> {
-            hola();
+            funcionesTPV.iniciarModoUsuario();
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> {
@@ -120,7 +129,14 @@ public class MenuComida {
         agregarBoton(panel, "4 Quesos", e -> hola());
         agregarBoton(panel, "Margarita", e -> hola());
         agregarBoton(panel, "Boloñesa", e -> hola());
-        agregarBoton(panel, "Volver al menú de selección", e -> hola());
+        agregarBoton(panel, "Consultar precios", e -> {
+            consultarPreciosPizzas();
+            frame.dispose();
+        });
+        agregarBoton(panel, "Volver al menú de selección", e -> {
+            funcionesTPV.iniciarModoUsuario();
+            frame.dispose();
+        });
         agregarBoton(panel, "No Comprar", e -> hola());
         agregarBoton(panel, "Ver carrito", e -> hola());
 
@@ -144,7 +160,14 @@ public class MenuComida {
         agregarBoton(panel, "Ternera", e -> hola());
         agregarBoton(panel, "Pollo", e -> hola());
         agregarBoton(panel, "Vegetariana", e -> hola());
-        agregarBoton(panel, "Volver al menú de selección", e -> hola());
+        agregarBoton(panel, "Consultar precios", e -> {
+            consultarPreciosHamburguesas();
+            frame.dispose();
+        });
+        agregarBoton(panel, "Volver al menú de selección", e -> {
+            funcionesTPV.iniciarModoUsuario();
+            frame.dispose();
+        });
         agregarBoton(panel, "No Comprar", e -> hola());
         agregarBoton(panel, "Ver carrito", e -> hola());
 
@@ -168,7 +191,14 @@ public class MenuComida {
         agregarBoton(panel, "Ternera", e -> hola());
         agregarBoton(panel, "Pollo", e -> hola());
         agregarBoton(panel, "Mixto", e -> hola());
-        agregarBoton(panel, "Volver al menú de selección", e -> hola());
+        agregarBoton(panel, "Consultar precios", e -> {
+            consultarPreciosKebabs();
+            frame.dispose();
+        });
+        agregarBoton(panel, "Volver al menú de selección", e -> {
+            funcionesTPV.iniciarModoUsuario();
+            frame.dispose();
+        });
         agregarBoton(panel, "No Comprar", e -> hola());
         agregarBoton(panel, "Ver carrito", e -> hola());
 
@@ -181,6 +211,57 @@ public class MenuComida {
 
     public void hola() {
         System.out.println("hola");
+    }
+
+    // Método para consultar precios de hamburguesas.
+    private void consultarPreciosHamburguesas() {
+        // Obtener precios de hamburguesas desde la lista.
+        StringBuilder preciosHamburguesas = new StringBuilder("Precios de Hamburguesas:\n");
+
+        // Iterar sobre la lista de hamburguesas.
+        for (Hamburguesa hamburguesa : hamburguesas) {
+            preciosHamburguesas.append(hamburguesa.getNombre()).append(": ").append(hamburguesa.getPrecio()).append(" €").append("\n");
+        }
+
+        // Mostrar el mensaje utilizando JOptionPane.
+        JOptionPane.showMessageDialog(null, preciosHamburguesas.toString());
+
+        // Volver al menú de selección de hamburguesas.
+        menuSeleccionHamburguesas();
+    }
+
+    // Método para consultar precios de kebabs    
+    private void consultarPreciosKebabs() {
+        // Obtener precios de kebabs desde la lista
+        StringBuilder preciosKebabs = new StringBuilder("Precios de Kebabs:\n");
+
+        // Iterar sobre la lista de kebabs.
+        for (Kebab kebab : kebabs) {
+            preciosKebabs.append(kebab.getNombre()).append(": ").append(kebab.getPrecio()).append(" €").append("\n");
+        }
+
+        // Mostrar el mensaje utilizando JOptionPane.
+        JOptionPane.showMessageDialog(null, preciosKebabs.toString());
+
+        // Volver al menú de selección de kebabs.
+        menuSeleccionKebabs();
+    }
+
+    // Método para consultar precios de pizzas    
+    private void consultarPreciosPizzas() {
+        // Obtener precios de pizzas desde la lista
+        StringBuilder preciosPizzas = new StringBuilder("Precios de Pizzas:\n");
+
+        // Iterar sobre la lista de pizzas.
+        for (Pizza pizza : pizzas) {
+            preciosPizzas.append(pizza.getNombre()).append(": ").append(pizza.getPrecio()).append(" €").append("\n");
+        }
+
+        // Mostrar el mensaje utilizando JOptionPane.
+        JOptionPane.showMessageDialog(null, preciosPizzas.toString());
+
+        // Volver al menú de selección de pizzas.
+        menuSeleccionPizzas();
     }
 
 }

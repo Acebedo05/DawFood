@@ -1,11 +1,13 @@
 package daw.productos;
 
+import daw.tpv.FuncionesTPV;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -13,6 +15,13 @@ import javax.swing.JPanel;
  * @author acebedo
  */
 public class MenuBebida {
+
+    private FuncionesTPV funcionesTPV;
+
+    public MenuBebida(FuncionesTPV funcionesTPV) {
+        // Almacena la referencia a FuncionesTPV.
+        this.funcionesTPV = funcionesTPV;
+    }
 
     // Listas para almacenar las diferentes categorías de bebidas.
     private List<Alcoholica> alcoholicas;
@@ -78,7 +87,7 @@ public class MenuBebida {
             frame.dispose();
         });
         agregarBoton(panel, "Volver al menú de selección", e -> {
-            hola();
+            funcionesTPV.iniciarModoUsuario();
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> {
@@ -120,7 +129,14 @@ public class MenuBebida {
         agregarBoton(panel, "Vino", e -> hola());
         agregarBoton(panel, "Sidra", e -> hola());
         agregarBoton(panel, "Cerveza", e -> hola());
-        agregarBoton(panel, "Volver al menú de selección", e -> hola());
+        agregarBoton(panel, "Consultar precios", e -> {
+            consultarPreciosAlcoholicas();
+            frame.dispose();
+        });
+        agregarBoton(panel, "Volver al menú de selección", e -> {
+            funcionesTPV.iniciarModoUsuario();
+            frame.dispose();
+        });
         agregarBoton(panel, "No Comprar", e -> hola());
         agregarBoton(panel, "Ver carrito", e -> hola());
 
@@ -144,7 +160,14 @@ public class MenuBebida {
         agregarBoton(panel, "CocaCola", e -> hola());
         agregarBoton(panel, "Fanta", e -> hola());
         agregarBoton(panel, "Aquarius", e -> hola());
-        agregarBoton(panel, "Volver al menú de selección", e -> hola());
+        agregarBoton(panel, "Consultar precios", e -> {
+            consultarPreciosRefrescos();
+            frame.dispose();
+        });
+        agregarBoton(panel, "Volver al menú de selección", e -> {
+            funcionesTPV.iniciarModoUsuario();
+            frame.dispose();
+        });
         agregarBoton(panel, "No Comprar", e -> hola());
         agregarBoton(panel, "Ver carrito", e -> hola());
 
@@ -168,7 +191,14 @@ public class MenuBebida {
         agregarBoton(panel, "Natural", e -> hola());
         agregarBoton(panel, "Con Gas", e -> hola());
         agregarBoton(panel, "Fría", e -> hola());
-        agregarBoton(panel, "Volver al menú de selección", e -> hola());
+        agregarBoton(panel, "Consultar precios", e -> {
+            consultarPreciosAguas();
+            frame.dispose();
+        });
+        agregarBoton(panel, "Volver al menú de selección", e -> {
+            funcionesTPV.iniciarModoUsuario();
+            frame.dispose();
+        });
         agregarBoton(panel, "No Comprar", e -> hola());
         agregarBoton(panel, "Ver carrito", e -> hola());
 
@@ -181,5 +211,56 @@ public class MenuBebida {
 
     public void hola() {
         System.out.println("hola");
+    }
+
+    // Método para consultar precios de alcoholicas    
+    private void consultarPreciosAlcoholicas() {
+        // Obtener precios de alcoholicas desde la lista
+        StringBuilder preciosAlcoholicas = new StringBuilder("Precios de Alcoholicas:\n");
+
+        // Iterar sobre la lista de alcoholicas.
+        for (Alcoholica alcoholica : alcoholicas) {
+            preciosAlcoholicas.append(alcoholica.getNombre()).append(": ").append(alcoholica.getPrecio()).append(" €").append("\n");
+        }
+
+        // Mostrar el mensaje utilizando JOptionPane.
+        JOptionPane.showMessageDialog(null, preciosAlcoholicas.toString());
+
+        // Volver al menú de selección de alcoholicas.
+        menuSeleccionAlcoholicas();
+    }
+
+    // Método para consultar precios de refrescos    
+    private void consultarPreciosRefrescos() {
+        // Obtener precios de refrescos desde la lista
+        StringBuilder preciosRefrescos = new StringBuilder("Precios de Refrescos:\n");
+
+        // Iterar sobre la lista de refrescos.
+        for (Refrescos refrescos : refrescos) {
+            preciosRefrescos.append(refrescos.getNombre()).append(": ").append(refrescos.getPrecio()).append(" €").append("\n");
+        }
+
+        // Mostrar el mensaje utilizando JOptionPane.
+        JOptionPane.showMessageDialog(null, preciosRefrescos.toString());
+
+        // Volver al menú de selección de refrescos.
+        menuSeleccionRefrescos();
+    }
+
+    // Método para consultar precios de aguas    
+    private void consultarPreciosAguas() {
+        // Obtener precios de aguas desde la lista
+        StringBuilder preciosAguas = new StringBuilder("Precios de Aguas:\n");
+
+        // Iterar sobre la lista de aguas.
+        for (Agua agua : aguas) {
+            preciosAguas.append(agua.getNombre()).append(": ").append(agua.getPrecio()).append(" €").append("\n");
+        }
+
+        // Mostrar el mensaje utilizando JOptionPane.
+        JOptionPane.showMessageDialog(null, preciosAguas.toString());
+
+        // Volver al menú de selección de aguas.
+        menuSeleccionAguas();
     }
 }

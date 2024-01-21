@@ -1,11 +1,13 @@
 package daw.productos;
 
+import daw.tpv.FuncionesTPV;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -13,7 +15,14 @@ import javax.swing.JPanel;
  * @author acebedo
  */
 public class MenuPostre {
-    
+
+    private FuncionesTPV funcionesTPV;
+
+    public MenuPostre(FuncionesTPV funcionesTPV) {
+        // Almacena la referencia a FuncionesTPV.
+        this.funcionesTPV = funcionesTPV;
+    }
+
     // Listas para almacenar las diferentes categorías de postres.
     private List<Casero> caseros;
 
@@ -50,7 +59,7 @@ public class MenuPostre {
             frame.dispose();
         });
         agregarBoton(panel, "Volver al menú de selección", e -> {
-            hola();
+            funcionesTPV.iniciarModoUsuario();
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> {
@@ -92,7 +101,14 @@ public class MenuPostre {
         agregarBoton(panel, "Flan", e -> hola());
         agregarBoton(panel, "Natilla", e -> hola());
         agregarBoton(panel, "Helado", e -> hola());
-        agregarBoton(panel, "Volver al menú de selección", e -> hola());
+        agregarBoton(panel, "Consultar precios", e -> {
+            consultarPreciosCaseros();
+            frame.dispose();
+        });
+        agregarBoton(panel, "Volver al menú de selección", e -> {
+            funcionesTPV.iniciarModoUsuario();
+            frame.dispose();
+        });
         agregarBoton(panel, "No Comprar", e -> hola());
         agregarBoton(panel, "Ver carrito", e -> hola());
 
@@ -106,5 +122,22 @@ public class MenuPostre {
     public void hola() {
         System.out.println("hola");
     }
-    
+
+    // Método para consultar precios de caseros    
+    private void consultarPreciosCaseros() {
+        // Obtener precios de caseros desde la lista
+        StringBuilder preciosCaseros = new StringBuilder("Precios de Caseros:\n");
+
+        // Iterar sobre la lista de caseros.
+        for (Casero casero : caseros) {
+            preciosCaseros.append(casero.getNombre()).append(": ").append(casero.getPrecio()).append(" €").append("\n");
+        }
+
+        // Mostrar el mensaje utilizando JOptionPane.
+        JOptionPane.showMessageDialog(null, preciosCaseros.toString());
+
+        // Volver al menú de selección de caseros.
+        menuSeleccionCaseros();
+    }
+
 }
