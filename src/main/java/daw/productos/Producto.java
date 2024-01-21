@@ -6,7 +6,7 @@ import java.util.Objects;
  *
  * @author acebedo
  */
-public class Refrescos {
+public class Producto {
     
     // Atributos.
     private final String id;
@@ -19,14 +19,14 @@ public class Refrescos {
     private String subcategoria;
 
     // Constructor.
-    public Refrescos(String id, String nombre, double precio, boolean enStock, String descripcion, String categoria, double iva, String subcategoria) {
+    public Producto(String id, String nombre, double precio, boolean enStock, String descripcion, String categoria, double iva, String subcategoria) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.enStock = enStock;
         this.descripcion = descripcion;
-        this.categoria = "Bebida";
-        this.iva = 0.21;
+        this.categoria = categoria;
+        this.iva = iva;
         this.subcategoria = subcategoria;
     }
 
@@ -95,14 +95,14 @@ public class Refrescos {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        hash = 67 * hash + Objects.hashCode(this.nombre);
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.precio) ^ (Double.doubleToLongBits(this.precio) >>> 32));
-        hash = 67 * hash + (this.enStock ? 1 : 0);
-        hash = 67 * hash + Objects.hashCode(this.descripcion);
-        hash = 67 * hash + Objects.hashCode(this.categoria);
-        hash = 67 * hash + (int) (Double.doubleToLongBits(this.iva) ^ (Double.doubleToLongBits(this.iva) >>> 32));
-        hash = 67 * hash + Objects.hashCode(this.subcategoria);
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.nombre);
+        hash = 59 * hash + (int) (Double.doubleToLongBits(this.precio) ^ (Double.doubleToLongBits(this.precio) >>> 32));
+        hash = 59 * hash + (this.enStock ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.descripcion);
+        hash = 59 * hash + Objects.hashCode(this.categoria);
+        hash = 59 * hash + (int) (Double.doubleToLongBits(this.iva) ^ (Double.doubleToLongBits(this.iva) >>> 32));
+        hash = 59 * hash + Objects.hashCode(this.subcategoria);
         return hash;
     }
 
@@ -118,7 +118,7 @@ public class Refrescos {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Refrescos other = (Refrescos) obj;
+        final Producto other = (Producto) obj;
         if (Double.doubleToLongBits(this.precio) != Double.doubleToLongBits(other.precio)) {
             return false;
         }
@@ -143,11 +143,11 @@ public class Refrescos {
         return Objects.equals(this.subcategoria, other.subcategoria);
     }
 
-    // toString.
+    // toString
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Refrescos{");
+        sb.append("Productos{");
         sb.append("id=").append(id);
         sb.append(", nombre=").append(nombre);
         sb.append(", precio=").append(precio);
