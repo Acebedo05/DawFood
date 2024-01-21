@@ -33,6 +33,11 @@ public class FuncionesTPV {
 
         JOptionPane.showMessageDialog(null, mensajeInicio);
 
+        // Crear instancias de las clases MenuComida, MenuBebida y MenuPostre.
+        MenuComida menuComida = new MenuComida(this);
+        MenuBebida menuBebida = new MenuBebida(this);
+        MenuPostre menuPostre = new MenuPostre(this);
+
         // Crear un JDialog para seleccionar el modo.
         JDialog dialog = new JDialog();
         dialog.setTitle("Seleccione una opción");
@@ -60,7 +65,7 @@ public class FuncionesTPV {
         dialog.add(panel);
 
         // Ajustar el tamaño y hacemos visible el diálogo.
-        dialog.setSize(400, 75);
+        dialog.setSize(400, 130);
         dialog.setLocationRelativeTo(null);  // Centrar el diálogo en la pantalla
         dialog.setVisible(true);
     }
@@ -68,14 +73,14 @@ public class FuncionesTPV {
 // Método para iniciar el modo de usuario.
     public void iniciarModoUsuario() {
         // Crear una instancia de la clase MenuComida.
-        MenuComida menuComida = new MenuComida();
-        
+        MenuComida menuComida = new MenuComida(this);
+
         // Crear una instancia de la clase MenuBebida.
-        MenuBebida menuBebida = new MenuBebida();
-        
+        MenuBebida menuBebida = new MenuBebida(this);
+
         // Crear una instancia de la clase MenuPostre.
-        MenuPostre menuPostre = new MenuPostre();
-        
+        MenuPostre menuPostre = new MenuPostre(this);
+
         // Pasar la instancia de MenuComida al constructor de FuncionesUsuario.
         daw.modos.FuncionesUsuario funcionesUsuario = new daw.modos.FuncionesUsuario(menuComida, menuBebida, menuPostre);
 
