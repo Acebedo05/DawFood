@@ -24,7 +24,7 @@ public class MenuPostre {
     }
 
     // Listas para almacenar las diferentes categorías de postres.
-    private List<Casero> caseros;
+    private List<Producto> caseros;
 
 // Constructor de la clase, se inicializan las listas y se llama al método principal.
     public void MenuPostre() {
@@ -39,9 +39,9 @@ public class MenuPostre {
 
     // Inicializar la lista de caseros con datos.
     private void inicializarCaseros() {
-        caseros.add(new Casero("C01", "Flan", 3.99, true, "Flan Casero", "Postre", 0.10, "Casero"));
-        caseros.add(new Casero("C02", "Natilla", 3.99, true, "Natilla Casera", "Postre", 0.10, "Casero"));
-        caseros.add(new Casero("C03", "Helado", 3.99, true, "Helado Casero", "Postre", 0.10, "Casero"));
+        caseros.add(new Producto("C01", "Flan", 3.99, true, "Flan Casero", "Postre", 0.10, "Casero"));
+        caseros.add(new Producto("C02", "Natilla", 3.99, true, "Natilla Casera", "Postre", 0.10, "Casero"));
+        caseros.add(new Producto("C03", "Helado", 3.99, true, "Helado Casero", "Postre", 0.10, "Casero"));
     }
 
     // Método principal que muestra el menú de selección para el usuario.
@@ -128,9 +128,11 @@ public class MenuPostre {
         // Obtener precios de caseros desde la lista
         StringBuilder preciosCaseros = new StringBuilder("Precios de Caseros:\n");
 
-        // Iterar sobre la lista de caseros.
-        for (Casero casero : caseros) {
-            preciosCaseros.append(casero.getNombre()).append(": ").append(casero.getPrecio()).append(" €").append("\n");
+        // Iterar sobre la lista de Casero y mostrar solo los productos de la SubCategoría "Casero".
+        for (Producto producto : caseros) {
+            if ("Casero".equals(producto.getSubcategoria())) {
+                preciosCaseros.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" €").append("\n");
+            }
         }
 
         // Mostrar el mensaje utilizando JOptionPane.

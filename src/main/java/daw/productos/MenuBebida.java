@@ -24,44 +24,30 @@ public class MenuBebida {
     }
 
     // Listas para almacenar las diferentes categorías de bebidas.
-    private List<Alcoholica> alcoholicas;
-    private List<Refrescos> refrescos;
-    private List<Agua> aguas;
+    private List<Producto> bebidas;
 
     // Constructor de la clase, se inicializan las listas y se llama al método principal.
     public void MenuBebida() {
-        this.alcoholicas = new ArrayList<>();
-        this.refrescos = new ArrayList<>();
-        this.aguas = new ArrayList<>();
+        this.bebidas = new ArrayList<>();
 
         // Inicializar las listas.
-        inicializarAlcoholicas();
-        inicializarRefrescos();
-        inicializarAguas();
+        inicializarBebidas();
 
         // Mostrar el menú principal de bebidas.
         menuSeleccionBebidas();
     }
 
     // Inicializar la lista de bebidas alcohólicas con datos.
-    private void inicializarAlcoholicas() {
-        alcoholicas.add(new Alcoholica("A01", "Vino", 4.99, true, "Vino", "Bebida", 0.21, "Alcoholica"));
-        alcoholicas.add(new Alcoholica("A02", "Sidra", 4.99, true, "Sidra", "Bebida", 0.21, "Alcoholica"));
-        alcoholicas.add(new Alcoholica("A03", "Cerveza", 1.99, true, "Cerveza", "Bebida", 0.21, "Alcoholica"));
-    }
-
-    // Inicializar la lista de bebidas Refrescos con datos.
-    private void inicializarRefrescos() {
-        refrescos.add(new Refrescos("R01", "CocaCola", 1.99, true, "CocaCola", "Bebida", 0.21, "Refresco"));
-        refrescos.add(new Refrescos("R02", "Fanta", 1.99, true, "Fanta", "Bebida", 0.21, "Refresco"));
-        refrescos.add(new Refrescos("R03", "Aquarius", 1.99, true, "Aquarius", "Bebida", 0.21, "Refresco"));
-    }
-
-    // Inicializar la lista de bebidas Aguas con datos.
-    private void inicializarAguas() {
-        aguas.add(new Agua("AG01", "Natural", 0.99, true, "Agua Natural", "Bebida", 0.10, "Agua"));
-        aguas.add(new Agua("AG02", "Gas", 0.99, true, "Agua con Gas", "Bebida", 0.10, "Agua"));
-        aguas.add(new Agua("AG03", "Fria", 0.99, true, "Agua Fría", "Bebida", 0.10, "Agua"));
+    private void inicializarBebidas() {
+        bebidas.add(new Producto("A01", "Vino", 4.99, true, "Vino", "Bebida", 0.21, "Alcoholica"));
+        bebidas.add(new Producto("A02", "Sidra", 4.99, true, "Sidra", "Bebida", 0.21, "Alcoholica"));
+        bebidas.add(new Producto("A03", "Cerveza", 1.99, true, "Cerveza", "Bebida", 0.21, "Alcoholica"));
+        bebidas.add(new Producto("R01", "CocaCola", 1.99, true, "CocaCola", "Bebida", 0.21, "Refresco"));
+        bebidas.add(new Producto("R02", "Fanta", 1.99, true, "Fanta", "Bebida", 0.21, "Refresco"));
+        bebidas.add(new Producto("R03", "Aquarius", 1.99, true, "Aquarius", "Bebida", 0.21, "Refresco"));
+        bebidas.add(new Producto("AG01", "Natural", 0.99, true, "Agua Natural", "Bebida", 0.10, "Agua"));
+        bebidas.add(new Producto("AG02", "Gas", 0.99, true, "Agua con Gas", "Bebida", 0.10, "Agua"));
+        bebidas.add(new Producto("AG03", "Fria", 0.99, true, "Agua Fría", "Bebida", 0.10, "Agua"));
     }
 
     // Método principal que muestra el menú de selección para el usuario.
@@ -218,9 +204,11 @@ public class MenuBebida {
         // Obtener precios de alcoholicas desde la lista
         StringBuilder preciosAlcoholicas = new StringBuilder("Precios de Alcoholicas:\n");
 
-        // Iterar sobre la lista de alcoholicas.
-        for (Alcoholica alcoholica : alcoholicas) {
-            preciosAlcoholicas.append(alcoholica.getNombre()).append(": ").append(alcoholica.getPrecio()).append(" €").append("\n");
+        // Iterar sobre la lista de Alcoholica y mostrar solo los productos de la SubCategoría "Alcoholica".
+        for (Producto producto : bebidas) {
+            if ("Alcoholica".equals(producto.getSubcategoria())) {
+                preciosAlcoholicas.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" €").append("\n");
+            }
         }
 
         // Mostrar el mensaje utilizando JOptionPane.
@@ -235,9 +223,11 @@ public class MenuBebida {
         // Obtener precios de refrescos desde la lista
         StringBuilder preciosRefrescos = new StringBuilder("Precios de Refrescos:\n");
 
-        // Iterar sobre la lista de refrescos.
-        for (Refrescos refrescos : refrescos) {
-            preciosRefrescos.append(refrescos.getNombre()).append(": ").append(refrescos.getPrecio()).append(" €").append("\n");
+          // Iterar sobre la lista de Refresco y mostrar solo los productos de la SubCategoría "Refresco".
+        for (Producto producto : bebidas) {
+            if ("Refresco".equals(producto.getSubcategoria())) {
+                preciosRefrescos.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" €").append("\n");
+            }
         }
 
         // Mostrar el mensaje utilizando JOptionPane.
@@ -252,9 +242,11 @@ public class MenuBebida {
         // Obtener precios de aguas desde la lista
         StringBuilder preciosAguas = new StringBuilder("Precios de Aguas:\n");
 
-        // Iterar sobre la lista de aguas.
-        for (Agua agua : aguas) {
-            preciosAguas.append(agua.getNombre()).append(": ").append(agua.getPrecio()).append(" €").append("\n");
+          // Iterar sobre la lista de Agua y mostrar solo los productos de la SubCategoría "Agua".
+        for (Producto producto : bebidas) {
+            if ("Agua".equals(producto.getSubcategoria())) {
+                preciosAguas.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" €").append("\n");
+            }
         }
 
         // Mostrar el mensaje utilizando JOptionPane.

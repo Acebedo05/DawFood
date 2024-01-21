@@ -24,44 +24,30 @@ public class MenuComida {
     }
 
     // Listas para almacenar las diferentes categorías de comidas.
-    private List<Pizza> pizzas;
-    private List<Hamburguesa> hamburguesas;
-    private List<Kebab> kebabs;
+    private List<Producto> comidas;
 
     // Constructor de la clase, se inicializan las listas y se llama al método principal.
     public void MenuComida() {
-        this.pizzas = new ArrayList<>();
-        this.hamburguesas = new ArrayList<>();
-        this.kebabs = new ArrayList<>();
+        this.comidas = new ArrayList<>();
 
         // Inicializar las listas.
-        inicializarPizzas();
-        inicializarHamburguesas();
-        inicializarKebabs();
+        inicializarComidas();
 
         // Mostrar el menú principal de comidas.
         menuSeleccionComidas();
     }
 
     // Inicializar la lista de pizzas con datos.
-    private void inicializarPizzas() {
-        pizzas.add(new Pizza("P01", "Queso", 8.99, true, "Pizza con cuatro tipos de quesos", "Comida", 0.10, "Pizza"));
-        pizzas.add(new Pizza("P02", "Margarita", 9.99, true, "Pizza con queso y tomate", "Comida", 0.10, "Pizza"));
-        pizzas.add(new Pizza("P03", "Boloñesa", 10.99, true, "Pizza con salsa boloñesa", "Comida", 0.10, "Pizza"));
-    }
-
-    // Inicializar la lista de hamburguesas con datos.
-    private void inicializarHamburguesas() {
-        hamburguesas.add(new Hamburguesa("H01", "Ternera", 7.99, true, "Hamburguesa de ternera", "Comida", 0.10, "Hamburguesa"));
-        hamburguesas.add(new Hamburguesa("H02", "Pollo", 6.99, true, "Hamburguesa de pollo", "Comida", 0.10, "Hamburguesa"));
-        hamburguesas.add(new Hamburguesa("H03", "Vegetal", 5.99, true, "Hamburguesa vegetariana", "Comida", 0.10, "Hamburguesa"));
-    }
-
-    // Inicializar la lista de kebabs con datos.
-    private void inicializarKebabs() {
-        kebabs.add(new Kebab("K01", "Ternera", 9.99, true, "Kebab de ternera", "Comida", 0.10, "Kebab"));
-        kebabs.add(new Kebab("K02", "Pollo", 8.99, true, "Kebab de pollo", "Comida", 0.10, "Kebab"));
-        kebabs.add(new Kebab("K03", "Mixto", 10.99, true, "Kebab mixto", "Comida", 0.10, "Kebab"));
+    private void inicializarComidas() {
+        comidas.add(new Producto("P01", "Queso", 8.99, true, "Pizza con cuatro tipos de quesos", "Comida", 0.10, "Pizza"));
+        comidas.add(new Producto("P02", "Margarita", 9.99, true, "Pizza con queso y tomate", "Comida", 0.10, "Pizza"));
+        comidas.add(new Producto("P03", "Boloñesa", 10.99, true, "Pizza con salsa boloñesa", "Comida", 0.10, "Pizza"));
+        comidas.add(new Producto("H01", "Ternera", 7.99, true, "Hamburguesa de ternera", "Comida", 0.10, "Hamburguesa"));
+        comidas.add(new Producto("H02", "Pollo", 6.99, true, "Hamburguesa de pollo", "Comida", 0.10, "Hamburguesa"));
+        comidas.add(new Producto("H03", "Vegetal", 5.99, true, "Hamburguesa vegetariana", "Comida", 0.10, "Hamburguesa"));
+        comidas.add(new Producto("K01", "Ternera", 9.99, true, "Kebab de ternera", "Comida", 0.10, "Kebab"));
+        comidas.add(new Producto("K02", "Pollo", 8.99, true, "Kebab de pollo", "Comida", 0.10, "Kebab"));
+        comidas.add(new Producto("K03", "Mixto", 10.99, true, "Kebab mixto", "Comida", 0.10, "Kebab"));
     }
 
     // Método principal que muestra el menú de selección para el usuario.
@@ -218,9 +204,11 @@ public class MenuComida {
         // Obtener precios de hamburguesas desde la lista.
         StringBuilder preciosHamburguesas = new StringBuilder("Precios de Hamburguesas:\n");
 
-        // Iterar sobre la lista de hamburguesas.
-        for (Hamburguesa hamburguesa : hamburguesas) {
-            preciosHamburguesas.append(hamburguesa.getNombre()).append(": ").append(hamburguesa.getPrecio()).append(" €").append("\n");
+        // Iterar sobre la lista de hamburguesas y mostrar solo los productos de la SubCategoría "Hamburguesa".
+        for (Producto producto : comidas) {
+            if ("Hamburguesa".equals(producto.getSubcategoria())) {
+                preciosHamburguesas.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" €").append("\n");
+            }
         }
 
         // Mostrar el mensaje utilizando JOptionPane.
@@ -230,14 +218,16 @@ public class MenuComida {
         menuSeleccionHamburguesas();
     }
 
-    // Método para consultar precios de kebabs    
+    // Método para consultar precios de kebabs.
     private void consultarPreciosKebabs() {
-        // Obtener precios de kebabs desde la lista
+        // Obtener precios de kebabs desde la lista.
         StringBuilder preciosKebabs = new StringBuilder("Precios de Kebabs:\n");
 
-        // Iterar sobre la lista de kebabs.
-        for (Kebab kebab : kebabs) {
-            preciosKebabs.append(kebab.getNombre()).append(": ").append(kebab.getPrecio()).append(" €").append("\n");
+        // Iterar sobre la lista de kebabs y mostrar solo los productos de la SubCategoría "Kebab".
+        for (Producto producto : comidas) {
+            if ("Kebab".equals(producto.getSubcategoria())) {
+                preciosKebabs.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" €").append("\n");
+            }
         }
 
         // Mostrar el mensaje utilizando JOptionPane.
@@ -247,14 +237,16 @@ public class MenuComida {
         menuSeleccionKebabs();
     }
 
-    // Método para consultar precios de pizzas    
+    // Método para consultar precios de pizzas.
     private void consultarPreciosPizzas() {
-        // Obtener precios de pizzas desde la lista
+        // Obtener precios de pizzas desde la lista.
         StringBuilder preciosPizzas = new StringBuilder("Precios de Pizzas:\n");
 
-        // Iterar sobre la lista de pizzas.
-        for (Pizza pizza : pizzas) {
-            preciosPizzas.append(pizza.getNombre()).append(": ").append(pizza.getPrecio()).append(" €").append("\n");
+        // Iterar sobre la lista de pizzas y mostrar solo los productos de la SubCategoría "Pizza".
+        for (Producto producto : comidas) {
+            if ("Pizza".equals(producto.getSubcategoria())) {
+                preciosPizzas.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" €").append("\n");
+            }
         }
 
         // Mostrar el mensaje utilizando JOptionPane.
