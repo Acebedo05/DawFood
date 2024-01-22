@@ -1,6 +1,7 @@
 package daw.productos;
 
 import daw.carrito.FuncionesCarrito;
+import daw.modos.FuncionesUsuario;
 import daw.tpv.FuncionesTPV;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -18,10 +19,13 @@ import javax.swing.JPanel;
 public class MenuComida {
 
     private FuncionesTPV funcionesTPV;
+    private FuncionesCarrito funcionesCarrito;
+    private FuncionesUsuario funcionesUsuario;
 
     public MenuComida(FuncionesTPV funcionesTPV) {
         // Almacena la referencia a FuncionesTPV.
         this.funcionesTPV = funcionesTPV;
+        this.funcionesCarrito = new FuncionesCarrito(this.funcionesUsuario);
     }
 
     // Listas para almacenar las diferentes categorías de comidas.
@@ -82,7 +86,7 @@ public class MenuComida {
             frame.dispose();
         });
         agregarBoton(panel, "Ver carrito", e -> {
-            hola();
+            funcionesCarrito.mostrarMenuCarritoConPrecios();
             frame.dispose();
         });
 
@@ -130,7 +134,7 @@ public class MenuComida {
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> hola());
-        agregarBoton(panel, "Ver carrito", e -> hola());
+        agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
         frame.setSize(400, 130);
@@ -166,7 +170,7 @@ public class MenuComida {
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> hola());
-        agregarBoton(panel, "Ver carrito", e -> hola());
+        agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
         frame.setSize(400, 130);
@@ -186,7 +190,7 @@ public class MenuComida {
         // Crear botones para cada opción del menú.
         // Asociar ActionListener a cada botón.
         for (Producto kebab : comidas) {
-            if ("Hamburguesa".equals(kebab.getSubcategoria())) {
+            if ("Kebab".equals(kebab.getSubcategoria())) {
                 agregarBoton(panel, kebab.getNombre(), e -> {
                     FuncionesCarrito.agregarProductoAlCarrito(kebab);
                     mostrarMensaje(kebab.getNombre() + " se ha agregado al carrito.");
@@ -202,7 +206,7 @@ public class MenuComida {
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> hola());
-        agregarBoton(panel, "Ver carrito", e -> hola());
+        agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
         frame.setSize(400, 130);
