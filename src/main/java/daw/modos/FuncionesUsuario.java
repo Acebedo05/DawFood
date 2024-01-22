@@ -83,7 +83,7 @@ public class FuncionesUsuario {
     // Método para mostrar los tipos de comida al usuario.
     private void verTipoComida() {
         // Llamar al método MenuComida de la clase MenuComida.
-        menuComida.mostrarMenuComida();
+        menuComida.MenuComida();
     }
 
     // Método para mostrar los tipos de bebidas al usuario.
