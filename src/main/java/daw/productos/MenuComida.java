@@ -44,15 +44,15 @@ public class MenuComida {
 
     // Inicializar la lista de pizzas con datos.
     private void inicializarComidas() {
-        comidas.add(new Producto("P01", "4 Quesos", 8.99, true, "Pizza con cuatro tipos de quesos", "Comida", 0.10, "Pizza"));
-        comidas.add(new Producto("P02", "Margarita", 9.99, true, "Pizza con queso y tomate", "Comida", 0.10, "Pizza"));
-        comidas.add(new Producto("P03", "Boloñesa", 10.99, true, "Pizza con salsa boloñesa", "Comida", 0.10, "Pizza"));
-        comidas.add(new Producto("H01", "Ternera", 7.99, true, "Hamburguesa de ternera", "Comida", 0.10, "Hamburguesa"));
-        comidas.add(new Producto("H02", "Pollo", 6.99, true, "Hamburguesa de pollo", "Comida", 0.10, "Hamburguesa"));
-        comidas.add(new Producto("H03", "Vegetal", 5.99, true, "Hamburguesa vegetariana", "Comida", 0.10, "Hamburguesa"));
-        comidas.add(new Producto("K01", "Ternera", 9.99, true, "Kebab de ternera", "Comida", 0.10, "Kebab"));
-        comidas.add(new Producto("K02", "Pollo", 8.99, true, "Kebab de pollo", "Comida", 0.10, "Kebab"));
-        comidas.add(new Producto("K03", "Mixto", 10.99, true, "Kebab mixto", "Comida", 0.10, "Kebab"));
+        comidas.add(new Producto("P01", "Pizza 4 Quesos", 8.99, true, "Pizza con cuatro tipos de quesos", "Comida", 0.10, "Pizza"));
+        comidas.add(new Producto("P02", "Pizza Margarita", 9.99, true, "Pizza con queso y tomate", "Comida", 0.10, "Pizza"));
+        comidas.add(new Producto("P03", "Pizza Boloñesa", 10.99, true, "Pizza con salsa boloñesa", "Comida", 0.10, "Pizza"));
+        comidas.add(new Producto("H01", "Hamburguesa Ternera", 7.99, true, "Hamburguesa de ternera", "Comida", 0.10, "Hamburguesa"));
+        comidas.add(new Producto("H02", "Hamburguesa Pollo", 6.99, true, "Hamburguesa de pollo", "Comida", 0.10, "Hamburguesa"));
+        comidas.add(new Producto("H03", "Hamburguesa Vegetal", 5.99, true, "Hamburguesa vegetariana", "Comida", 0.10, "Hamburguesa"));
+        comidas.add(new Producto("K01", "Kebab Ternera", 9.99, true, "Kebab de ternera", "Comida", 0.10, "Kebab"));
+        comidas.add(new Producto("K02", "Kebab Pollo", 8.99, true, "Kebab de pollo", "Comida", 0.10, "Kebab"));
+        comidas.add(new Producto("K03", "Kebab Mixto", 10.99, true, "Kebab mixto", "Comida", 0.10, "Kebab"));
     }
 
     // Método principal que muestra el menú de selección para el usuario.
@@ -91,7 +91,7 @@ public class MenuComida {
         });
 
         frame.add(panel);
-        frame.setSize(400, 130);
+        frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -121,7 +121,6 @@ public class MenuComida {
             if ("Pizza".equals(pizza.getSubcategoria())) {
                 agregarBoton(panel, pizza.getNombre(), e -> {
                     FuncionesCarrito.agregarProductoAlCarrito(pizza);
-                    mostrarMensaje(pizza.getNombre() + " se ha agregado al carrito.");
                 });
             }
         }
@@ -137,7 +136,7 @@ public class MenuComida {
         agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
-        frame.setSize(400, 130);
+        frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -157,7 +156,6 @@ public class MenuComida {
             if ("Hamburguesa".equals(hamburguesa.getSubcategoria())) {
                 agregarBoton(panel, hamburguesa.getNombre(), e -> {
                     FuncionesCarrito.agregarProductoAlCarrito(hamburguesa);
-                    mostrarMensaje(hamburguesa.getNombre() + " se ha agregado al carrito.");
                 });
             }
         }
@@ -173,7 +171,7 @@ public class MenuComida {
         agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
-        frame.setSize(400, 130);
+        frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -193,7 +191,6 @@ public class MenuComida {
             if ("Kebab".equals(kebab.getSubcategoria())) {
                 agregarBoton(panel, kebab.getNombre(), e -> {
                     FuncionesCarrito.agregarProductoAlCarrito(kebab);
-                    mostrarMensaje(kebab.getNombre() + " se ha agregado al carrito.");
                 });
             }
         }
@@ -209,7 +206,7 @@ public class MenuComida {
         agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
-        frame.setSize(400, 130);
+        frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -274,11 +271,6 @@ public class MenuComida {
 
         // Volver al menú de selección de pizzas.
         menuSeleccionPizzas();
-    }
-
-    // Método para mostrar un mensaje utilizando JOptionPane.
-    private void mostrarMensaje(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje);
     }
 
 }
