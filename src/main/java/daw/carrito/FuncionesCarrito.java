@@ -13,7 +13,8 @@ import java.util.List;
  */
 public class FuncionesCarrito {
 
-    private static List<Producto> carrito = new ArrayList<>();;
+    private static List<Producto> carrito = new ArrayList<>();
+    ;
     private FuncionesUsuario funcionesUsuario;
 
     public FuncionesCarrito(FuncionesUsuario funcionesUsuario) {
@@ -25,29 +26,34 @@ public class FuncionesCarrito {
         carrito.add(producto);
     }
 
-    // Método para mostrar el menú de productos seleccionados con precios usando JOptionPane
+// Método para mostrar el menú de productos seleccionados con precios usando JOptionPane
     public void mostrarMenuCarritoConPrecios() {
-        StringBuilder mensaje = new StringBuilder("Productos Seleccionados:\n");
-        double precioTotalSinIVA = 0;
-        double precioTotalConIVA = 0;
+        try {
+            StringBuilder mensaje = new StringBuilder("Productos Seleccionados:\n");
+            double precioTotalSinIVA = 0;
+            double precioTotalConIVA = 0;
 
-        for (Producto producto : carrito) {
-            mensaje.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" € (sin IVA)\n");
+            for (Producto producto : carrito) {
+                mensaje.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" € (sin IVA)\n");
 
-            // Calcular el precio total sin IVA
-            precioTotalSinIVA += producto.getPrecio();
+                // Calcular el precio total sin IVA
+                precioTotalSinIVA += producto.getPrecio();
 
-            // Calcular el precio total con IVA
-            precioTotalConIVA += producto.getPrecioConIVA();
+                // Calcular el precio total con IVA
+                precioTotalConIVA += producto.getPrecioConIVA();
+            }
+
+            mensaje.append("Precio Total sin IVA: ").append(precioTotalSinIVA).append(" €\n");
+            mensaje.append("Precio Total con IVA: ").append(precioTotalConIVA).append(" €");
+
+            // Mostrar el mensaje utilizando JOptionPane
+            JOptionPane.showMessageDialog(null, mensaje.toString(), "Carrito", JOptionPane.INFORMATION_MESSAGE);
+
+            // Llamar al método menuSeleccion de FuncionesUsuario
+            funcionesUsuario.menuSeleccion();
+        } catch (NullPointerException e) {
+            // Imprimir la excepción en la terminal
+            System.out.println("Excepción NullPointerException: " + e.getMessage());
         }
-
-        mensaje.append("Precio Total sin IVA: ").append(precioTotalSinIVA).append(" €\n");
-        mensaje.append("Precio Total con IVA: ").append(precioTotalConIVA).append(" €");
-
-        // Mostrar el mensaje utilizando JOptionPane
-        JOptionPane.showMessageDialog(null, mensaje.toString(), "Carrito", JOptionPane.INFORMATION_MESSAGE);
-        
-        // Llamar al método menuSeleccion de FuncionesUsuario.
-        funcionesUsuario.menuSeleccion();
     }
 }
