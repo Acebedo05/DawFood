@@ -7,7 +7,7 @@ import java.util.Objects;
  * @author acebedo
  */
 public class Producto {
-    
+
     // Atributos.
     private final String id;
     private String nombre;
@@ -91,6 +91,12 @@ public class Producto {
         this.subcategoria = subcategoria;
     }
 
+    public double getPrecioConIVA() {
+        // Calcula el precio con IVA
+        double precioConIVA = precio + (precio * iva);
+        return precioConIVA;
+    }
+
     // hashCode.
     @Override
     public int hashCode() {
@@ -159,5 +165,5 @@ public class Producto {
         sb.append('}');
         return sb.toString();
     }
-    
+
 }
