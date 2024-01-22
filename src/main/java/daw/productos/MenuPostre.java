@@ -1,5 +1,7 @@
 package daw.productos;
 
+import daw.carrito.FuncionesCarrito;
+import daw.modos.FuncionesUsuario;
 import daw.tpv.FuncionesTPV;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -17,10 +19,13 @@ import javax.swing.JPanel;
 public class MenuPostre {
 
     private FuncionesTPV funcionesTPV;
+    private FuncionesCarrito funcionesCarrito;
+    private FuncionesUsuario funcionesUsuario;
 
     public MenuPostre(FuncionesTPV funcionesTPV) {
         // Almacena la referencia a FuncionesTPV.
         this.funcionesTPV = funcionesTPV;
+        this.funcionesCarrito = new FuncionesCarrito(this.funcionesUsuario);
     }
 
     // Listas para almacenar las diferentes categorías de postres.
@@ -67,12 +72,12 @@ public class MenuPostre {
             frame.dispose();
         });
         agregarBoton(panel, "Ver carrito", e -> {
-            hola();
+            funcionesCarrito.mostrarMenuCarritoConPrecios();
             frame.dispose();
         });
 
         frame.add(panel);
-        frame.setSize(400, 130);
+        frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -98,9 +103,13 @@ public class MenuPostre {
 
         // Crear botones para cada opción del menú.
         // Asociar ActionListener a cada botón.
-        agregarBoton(panel, "Flan", e -> hola());
-        agregarBoton(panel, "Natilla", e -> hola());
-        agregarBoton(panel, "Helado", e -> hola());
+        for (Producto caseros : caseros) {
+            if ("Casero".equals(caseros.getSubcategoria())) {
+                agregarBoton(panel, caseros.getNombre(), e -> {
+                    FuncionesCarrito.agregarProductoAlCarrito(caseros);
+                });
+            }
+        }
         agregarBoton(panel, "Consultar precios", e -> {
             consultarPreciosCaseros();
             frame.dispose();
@@ -110,10 +119,10 @@ public class MenuPostre {
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> hola());
-        agregarBoton(panel, "Ver carrito", e -> hola());
+        agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
-        frame.setSize(400, 130);
+        frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

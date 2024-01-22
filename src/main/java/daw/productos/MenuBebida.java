@@ -1,5 +1,7 @@
 package daw.productos;
 
+import daw.carrito.FuncionesCarrito;
+import daw.modos.FuncionesUsuario;
 import daw.tpv.FuncionesTPV;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -17,10 +19,13 @@ import javax.swing.JPanel;
 public class MenuBebida {
 
     private FuncionesTPV funcionesTPV;
+    private FuncionesCarrito funcionesCarrito;
+    private FuncionesUsuario funcionesUsuario;
 
     public MenuBebida(FuncionesTPV funcionesTPV) {
         // Almacena la referencia a FuncionesTPV.
         this.funcionesTPV = funcionesTPV;
+        this.funcionesCarrito = new FuncionesCarrito(this.funcionesUsuario);
     }
 
     // Listas para almacenar las diferentes categorías de bebidas.
@@ -45,9 +50,9 @@ public class MenuBebida {
         bebidas.add(new Producto("R01", "CocaCola", 1.99, true, "CocaCola", "Bebida", 0.21, "Refresco"));
         bebidas.add(new Producto("R02", "Fanta", 1.99, true, "Fanta", "Bebida", 0.21, "Refresco"));
         bebidas.add(new Producto("R03", "Aquarius", 1.99, true, "Aquarius", "Bebida", 0.21, "Refresco"));
-        bebidas.add(new Producto("AG01", "Natural", 0.99, true, "Agua Natural", "Bebida", 0.10, "Agua"));
-        bebidas.add(new Producto("AG02", "Gas", 0.99, true, "Agua con Gas", "Bebida", 0.10, "Agua"));
-        bebidas.add(new Producto("AG03", "Fria", 0.99, true, "Agua Fría", "Bebida", 0.10, "Agua"));
+        bebidas.add(new Producto("AG01", "Agua Natural", 0.99, true, "Agua Natural", "Bebida", 0.10, "Agua"));
+        bebidas.add(new Producto("AG02", "Agua con Gas", 0.99, true, "Agua con Gas", "Bebida", 0.10, "Agua"));
+        bebidas.add(new Producto("AG03", "Agua Fria", 0.99, true, "Agua Fría", "Bebida", 0.10, "Agua"));
     }
 
     // Método principal que muestra el menú de selección para el usuario.
@@ -81,12 +86,12 @@ public class MenuBebida {
             frame.dispose();
         });
         agregarBoton(panel, "Ver carrito", e -> {
-            hola();
+            funcionesCarrito.mostrarMenuCarritoConPrecios();
             frame.dispose();
         });
 
         frame.add(panel);
-        frame.setSize(400, 130);
+        frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -112,9 +117,13 @@ public class MenuBebida {
 
         // Crear botones para cada opción del menú.
         // Asociar ActionListener a cada botón.
-        agregarBoton(panel, "Vino", e -> hola());
-        agregarBoton(panel, "Sidra", e -> hola());
-        agregarBoton(panel, "Cerveza", e -> hola());
+        for (Producto alcoholica : bebidas) {
+            if ("Alcoholica".equals(alcoholica.getSubcategoria())) {
+                agregarBoton(panel, alcoholica.getNombre(), e -> {
+                    FuncionesCarrito.agregarProductoAlCarrito(alcoholica);
+                });
+            }
+        }
         agregarBoton(panel, "Consultar precios", e -> {
             consultarPreciosAlcoholicas();
             frame.dispose();
@@ -124,10 +133,10 @@ public class MenuBebida {
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> hola());
-        agregarBoton(panel, "Ver carrito", e -> hola());
+        agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
-        frame.setSize(400, 130);
+        frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -143,9 +152,13 @@ public class MenuBebida {
 
         // Crear botones para cada opción del menú.
         // Asociar ActionListener a cada botón.
-        agregarBoton(panel, "CocaCola", e -> hola());
-        agregarBoton(panel, "Fanta", e -> hola());
-        agregarBoton(panel, "Aquarius", e -> hola());
+        for (Producto refresco : bebidas) {
+            if ("Refresco".equals(refresco.getSubcategoria())) {
+                agregarBoton(panel, refresco.getNombre(), e -> {
+                    FuncionesCarrito.agregarProductoAlCarrito(refresco);
+                });
+            }
+        }
         agregarBoton(panel, "Consultar precios", e -> {
             consultarPreciosRefrescos();
             frame.dispose();
@@ -155,10 +168,10 @@ public class MenuBebida {
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> hola());
-        agregarBoton(panel, "Ver carrito", e -> hola());
+        agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
-        frame.setSize(400, 130);
+        frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -174,9 +187,13 @@ public class MenuBebida {
 
         // Crear botones para cada opción del menú.
         // Asociar ActionListener a cada botón.
-        agregarBoton(panel, "Natural", e -> hola());
-        agregarBoton(panel, "Con Gas", e -> hola());
-        agregarBoton(panel, "Fría", e -> hola());
+        for (Producto agua : bebidas) {
+            if ("Agua".equals(agua.getSubcategoria())) {
+                agregarBoton(panel, agua.getNombre(), e -> {
+                    FuncionesCarrito.agregarProductoAlCarrito(agua);
+                });
+            }
+        }
         agregarBoton(panel, "Consultar precios", e -> {
             consultarPreciosAguas();
             frame.dispose();
@@ -186,10 +203,10 @@ public class MenuBebida {
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> hola());
-        agregarBoton(panel, "Ver carrito", e -> hola());
+        agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
-        frame.setSize(400, 130);
+        frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -223,7 +240,7 @@ public class MenuBebida {
         // Obtener precios de refrescos desde la lista
         StringBuilder preciosRefrescos = new StringBuilder("Precios de Refrescos:\n");
 
-          // Iterar sobre la lista de Refresco y mostrar solo los productos de la SubCategoría "Refresco".
+        // Iterar sobre la lista de Refresco y mostrar solo los productos de la SubCategoría "Refresco".
         for (Producto producto : bebidas) {
             if ("Refresco".equals(producto.getSubcategoria())) {
                 preciosRefrescos.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" €").append("\n");
@@ -242,7 +259,7 @@ public class MenuBebida {
         // Obtener precios de aguas desde la lista
         StringBuilder preciosAguas = new StringBuilder("Precios de Aguas:\n");
 
-          // Iterar sobre la lista de Agua y mostrar solo los productos de la SubCategoría "Agua".
+        // Iterar sobre la lista de Agua y mostrar solo los productos de la SubCategoría "Agua".
         for (Producto producto : bebidas) {
             if ("Agua".equals(producto.getSubcategoria())) {
                 preciosAguas.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" €").append("\n");
