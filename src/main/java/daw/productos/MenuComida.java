@@ -1,7 +1,7 @@
 package daw.productos;
 
-import daw.tpv.FuncionesTPV;
 import daw.carrito.FuncionesCarrito;
+import daw.tpv.FuncionesTPV;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -18,16 +18,19 @@ import javax.swing.JPanel;
 public class MenuComida {
 
     private FuncionesTPV funcionesTPV;
-    private FuncionesCarrito funcionesCarrito;
-    private List<Producto> comidas = new ArrayList<>();
 
-    public MenuComida(FuncionesTPV funcionesTPV, FuncionesCarrito funcionesCarrito) {
-        // Almacena la referencia a FuncionesTPV y FuncionesCarrito.
+    public MenuComida(FuncionesTPV funcionesTPV) {
+        // Almacena la referencia a FuncionesTPV.
         this.funcionesTPV = funcionesTPV;
-        this.funcionesCarrito = funcionesCarrito;
     }
 
-    public void mostrarMenuComida() {
+    // Listas para almacenar las diferentes categorías de comidas.
+    private List<Producto> comidas;
+
+    // Constructor de la clase, se inicializan las listas y se llama al método principal.
+    public void MenuComida() {
+        this.comidas = new ArrayList<>();
+
         // Inicializar las listas.
         inicializarComidas();
 
@@ -79,7 +82,7 @@ public class MenuComida {
             frame.dispose();
         });
         agregarBoton(panel, "Ver carrito", e -> {
-            funcionesCarrito.mostrarMenuCarritoConPrecios();
+            hola();
             frame.dispose();
         });
 
@@ -110,15 +113,16 @@ public class MenuComida {
 
         // Crear botones para cada opción del menú.
         // Asociar ActionListener a cada botón.
-        agregarBoton(panel, "4 Quesos", e -> agregarProductoPorNombre("4 Quesos"));
-        agregarBoton(panel, "Margarita", e -> agregarProductoPorNombre("Margarita"));
-        agregarBoton(panel, "Boloñesa", e -> agregarProductoPorNombre("Boloñesa"));
+        for (Producto pizza : comidas) {
+            if ("Pizza".equals(pizza.getSubcategoria())) {
+                agregarBoton(panel, pizza.getNombre(), e -> {
+                    FuncionesCarrito.agregarProductoAlCarrito(pizza);
+                    mostrarMensaje(pizza.getNombre() + " se ha agregado al carrito.");
+                });
+            }
+        }
         agregarBoton(panel, "Consultar precios", e -> {
             consultarPreciosPizzas();
-            frame.dispose();
-        });
-        agregarBoton(panel, "Ver carrito", e -> {
-            funcionesCarrito.mostrarMenuCarritoConPrecios();
             frame.dispose();
         });
         agregarBoton(panel, "Volver al menú de selección", e -> {
@@ -145,15 +149,16 @@ public class MenuComida {
 
         // Crear botones para cada opción del menú.
         // Asociar ActionListener a cada botón.
-        agregarBoton(panel, "Ternera", e -> agregarProductoPorNombre("Ternera"));
-        agregarBoton(panel, "Pollo", e -> agregarProductoPorNombre("Pollo"));
-        agregarBoton(panel, "Vegetal", e -> agregarProductoPorNombre("Vegetal"));
+        for (Producto hamburguesa : comidas) {
+            if ("Hamburguesa".equals(hamburguesa.getSubcategoria())) {
+                agregarBoton(panel, hamburguesa.getNombre(), e -> {
+                    FuncionesCarrito.agregarProductoAlCarrito(hamburguesa);
+                    mostrarMensaje(hamburguesa.getNombre() + " se ha agregado al carrito.");
+                });
+            }
+        }
         agregarBoton(panel, "Consultar precios", e -> {
             consultarPreciosHamburguesas();
-            frame.dispose();
-        });
-        agregarBoton(panel, "Ver carrito", e -> {
-            funcionesCarrito.mostrarMenuCarritoConPrecios();
             frame.dispose();
         });
         agregarBoton(panel, "Volver al menú de selección", e -> {
@@ -161,6 +166,7 @@ public class MenuComida {
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> hola());
+        agregarBoton(panel, "Ver carrito", e -> hola());
 
         frame.add(panel);
         frame.setSize(400, 130);
@@ -179,15 +185,16 @@ public class MenuComida {
 
         // Crear botones para cada opción del menú.
         // Asociar ActionListener a cada botón.
-        agregarBoton(panel, "Ternera", e -> agregarProductoPorNombre("Ternera"));
-        agregarBoton(panel, "Pollo", e -> agregarProductoPorNombre("Pollo"));
-        agregarBoton(panel, "Mixto", e -> agregarProductoPorNombre("Mixto"));
+        for (Producto kebab : comidas) {
+            if ("Hamburguesa".equals(kebab.getSubcategoria())) {
+                agregarBoton(panel, kebab.getNombre(), e -> {
+                    FuncionesCarrito.agregarProductoAlCarrito(kebab);
+                    mostrarMensaje(kebab.getNombre() + " se ha agregado al carrito.");
+                });
+            }
+        }
         agregarBoton(panel, "Consultar precios", e -> {
             consultarPreciosKebabs();
-            frame.dispose();
-        });
-        agregarBoton(panel, "Ver carrito", e -> {
-            funcionesCarrito.mostrarMenuCarritoConPrecios();
             frame.dispose();
         });
         agregarBoton(panel, "Volver al menú de selección", e -> {
@@ -195,6 +202,7 @@ public class MenuComida {
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> hola());
+        agregarBoton(panel, "Ver carrito", e -> hola());
 
         frame.add(panel);
         frame.setSize(400, 130);
@@ -264,20 +272,9 @@ public class MenuComida {
         menuSeleccionPizzas();
     }
 
-    // Método para agregar un producto al carrito por nombre.
-    public void agregarProductoPorNombre(String nombre) {
-        // Iterar sobre la lista de productos de MenuComida y buscar por nombre.
-        for (Producto producto : comidas) {
-            if (producto.getNombre().equalsIgnoreCase(nombre)) {
-                // Si se encuentra el producto, agregarlo al carrito.
-                funcionesCarrito.carrito.add(producto);
-                JOptionPane.showMessageDialog(null, "Producto agregado al carrito" + producto.getNombre());
-                return; // Terminar el método después de agregar el producto al carrito.
-            }
-        }
-
-        // Si no se encuentra el producto, mostrar un mensaje.
-        JOptionPane.showMessageDialog(null, "Producto no encontrado: " + nombre);
+    // Método para mostrar un mensaje utilizando JOptionPane.
+    private void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
     }
 
 }
