@@ -23,10 +23,29 @@ public class FuncionesCarrito {
 
     // Método para agregar productos seleccionados
     public static void agregarProductoAlCarrito(Producto producto) {
-        carrito.add(producto);
+        // Pedir al usuario que ingrese la cantidad utilizando JOptionPane
+        String cantidada = JOptionPane.showInputDialog("Ingrese la cantidad de '" + producto.getNombre() + "' que desea agregar al carrito:");
+
+        try {
+            // Convertir la cantidad ingresada a un número entero
+            int cantidad = Integer.parseInt(cantidada);
+
+            if (cantidad > 0) {
+                for (int i = 0; i < cantidad; i++) {
+                    // Agregar el producto al carrito la cantidad especificada de veces
+                    carrito.add(producto);
+                }
+
+                JOptionPane.showMessageDialog(null, cantidad + " x '" + producto.getNombre() + "' ha sido agregado al carrito.");
+            } else {
+                JOptionPane.showMessageDialog(null, "La cantidad debe ser mayor que 0. No se ha agregado nada al carrito.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para la cantidad.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-// Método para mostrar el menú de productos seleccionados con precios usando JOptionPane
+    // Método para mostrar el menú de productos seleccionados con precios usando JOptionPane
     public void mostrarMenuCarritoConPrecios() {
         try {
             StringBuilder mensaje = new StringBuilder("Productos Seleccionados:\n");
@@ -43,8 +62,8 @@ public class FuncionesCarrito {
                 precioTotalConIVA += producto.getPrecioConIVA();
             }
 
-            mensaje.append("Precio Total sin IVA: ").append(precioTotalSinIVA).append(" €\n");
-            mensaje.append("Precio Total con IVA: ").append(precioTotalConIVA).append(" €");
+            mensaje.append("Precio Total sin IVA: ").append(String.format("%.2f", precioTotalSinIVA)).append(" €\n");
+            mensaje.append("Precio Total con IVA: ").append(String.format("%.2f", precioTotalConIVA)).append(" €");
 
             // Mostrar el mensaje utilizando JOptionPane
             JOptionPane.showMessageDialog(null, mensaje.toString(), "Carrito", JOptionPane.INFORMATION_MESSAGE);
