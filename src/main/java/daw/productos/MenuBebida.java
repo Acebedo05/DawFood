@@ -81,13 +81,8 @@ public class MenuBebida {
             funcionesTPV.iniciarModoUsuario();
             frame.dispose();
         });
-        agregarBoton(panel, "No Comprar", e -> {
-            hola();
-            frame.dispose();
-        });
         agregarBoton(panel, "Ver carrito", e -> {
             funcionesCarrito.mostrarMenuCarritoConPrecios();
-            frame.dispose();
         });
 
         frame.add(panel);
@@ -132,7 +127,6 @@ public class MenuBebida {
             funcionesTPV.iniciarModoUsuario();
             frame.dispose();
         });
-        agregarBoton(panel, "No Comprar", e -> hola());
         agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
@@ -167,7 +161,6 @@ public class MenuBebida {
             funcionesTPV.iniciarModoUsuario();
             frame.dispose();
         });
-        agregarBoton(panel, "No Comprar", e -> hola());
         agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
@@ -202,7 +195,6 @@ public class MenuBebida {
             funcionesTPV.iniciarModoUsuario();
             frame.dispose();
         });
-        agregarBoton(panel, "No Comprar", e -> hola());
         agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
         frame.add(panel);
@@ -211,11 +203,7 @@ public class MenuBebida {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-
-    public void hola() {
-        System.out.println("hola");
-    }
-
+    
     // Método para consultar precios de alcoholicas    
     private void consultarPreciosAlcoholicas() {
         // Obtener precios de alcoholicas desde la lista
