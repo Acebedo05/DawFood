@@ -1,13 +1,11 @@
 package daw.tpv;
 
 import javax.swing.JButton;
-import daw.carrito.FuncionesCarrito;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.util.Random;
 import javax.swing.JDialog;
 import daw.modos.FuncionesAdministrador;
-import daw.modos.FuncionesUsuario;
 import daw.productos.MenuComida;
 import daw.productos.MenuBebida;
 import daw.productos.MenuPostre;
@@ -19,17 +17,10 @@ import daw.productos.MenuPostre;
 public class FuncionesTPV {
 
     private AtributosTPV atributosTPV;
-    private FuncionesCarrito funcionesCarrito;
-    private FuncionesUsuario funcionesUsuario;
 
     // Constructor de la clase FuncionesTPV.
     public FuncionesTPV(AtributosTPV atributosTPV) {
         this.atributosTPV = atributosTPV;
-
-        // Crear instancia de FuncionesUsuario antes de usarla.
-        this.funcionesUsuario = new FuncionesUsuario(new MenuComida(this, null), new MenuBebida(this), new MenuPostre(this));
-
-        this.funcionesCarrito = new FuncionesCarrito(this.funcionesUsuario);
     }
 
     // Método para encender el TPV, mostrando un mensaje de bienvenida y permitiendo seleccionar el modo.
@@ -43,7 +34,7 @@ public class FuncionesTPV {
         JOptionPane.showMessageDialog(null, mensajeInicio);
 
         // Crear instancias de las clases MenuComida, MenuBebida y MenuPostre.
-        MenuComida menuComida = new MenuComida(this, funcionesCarrito);
+        MenuComida menuComida = new MenuComida(this);
         MenuBebida menuBebida = new MenuBebida(this);
         MenuPostre menuPostre = new MenuPostre(this);
 
@@ -79,16 +70,19 @@ public class FuncionesTPV {
         dialog.setVisible(true);
     }
 
-    // Método para iniciar el modo de usuario.
+// Método para iniciar el modo de usuario.
     public void iniciarModoUsuario() {
-        // Crear una instancia de la clase menuComida.
-        MenuComida menuComida = new MenuComida(this, funcionesCarrito);
+        // Crear una instancia de la clase MenuComida.
+        MenuComida menuComida = new MenuComida(this);
 
         // Crear una instancia de la clase MenuBebida.
         MenuBebida menuBebida = new MenuBebida(this);
 
         // Crear una instancia de la clase MenuPostre.
         MenuPostre menuPostre = new MenuPostre(this);
+
+        // Pasar la instancia de MenuComida al constructor de FuncionesUsuario.
+        daw.modos.FuncionesUsuario funcionesUsuario = new daw.modos.FuncionesUsuario(menuComida, menuBebida, menuPostre);
 
         // Llamar al método menuSeleccion de la clase FuncionesUsuario.
         funcionesUsuario.menuSeleccion();
