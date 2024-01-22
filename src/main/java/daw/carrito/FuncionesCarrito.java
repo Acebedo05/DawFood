@@ -14,7 +14,7 @@ import java.util.List;
 public class FuncionesCarrito {
 
     private static List<Producto> carrito = new ArrayList<>();
-    ;
+    
     private FuncionesUsuario funcionesUsuario;
 
     public FuncionesCarrito(FuncionesUsuario funcionesUsuario) {
