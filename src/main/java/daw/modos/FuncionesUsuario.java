@@ -1,5 +1,7 @@
 package daw.modos;
 
+import daw.carrito.FuncionesCarrito;
+import daw.tpv.FuncionesTPV;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -14,6 +16,16 @@ import daw.productos.MenuPostre;
  * @author khalid
  */
 public class FuncionesUsuario {
+
+    private FuncionesTPV funcionesTPV;
+    private FuncionesCarrito funcionesCarrito;
+    private FuncionesUsuario funcionesUsuario;
+
+    public FuncionesUsuario(FuncionesTPV funcionesTPV) {
+        // Almacena la referencia a FuncionesTPV.
+        this.funcionesTPV = funcionesTPV;
+        this.funcionesCarrito = new FuncionesCarrito(this.funcionesUsuario);
+    }
 
     // Método principal que muestra el menú de selección para el usuario.
     public void menuSeleccion() {
@@ -38,7 +50,7 @@ public class FuncionesUsuario {
             frame.dispose();
         });
         agregarBoton(panel, "Ver Carrito", e -> {
-            verCarrito();
+            noComprar();
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> {
@@ -61,12 +73,6 @@ public class FuncionesUsuario {
         boton.addActionListener(actionListener);
         // Agregar botones al panel.
         panel.add(boton);
-    }
-
-    // Método para mostrar el carrito del usuario.
-    private void verCarrito() {
-        // Por hacer
-        System.out.println("verCarrito");
     }
 
     private MenuComida menuComida;
