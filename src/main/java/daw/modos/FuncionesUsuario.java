@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import daw.productos.MenuComida;
 import daw.productos.MenuBebida;
 import daw.productos.MenuPostre;
+import daw.tpv.ObjetosTPV;
 
 /**
  *
@@ -49,12 +50,12 @@ public class FuncionesUsuario {
             verPostres();
             frame.dispose();
         });
-        agregarBoton(panel, "Ver Carrito", e -> {
-            noComprar();
+        agregarBoton(panel, "Comprar", e -> {
+            noComprar(frame);
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> {
-            noComprar();
+            noComprar(frame);
             frame.dispose();
         });
 
@@ -104,9 +105,14 @@ public class FuncionesUsuario {
         menuPostre.MenuPostre();
     }
 
-    // Método para que el usuario pueda cancelar la compra.
-    private void noComprar() {
-        // Por hacer
-        System.out.println("noComprar");
+    // Método para volver al Menú Inicial
+    private void noComprar(JFrame frame) {
+        // Cerrar la ventana actual.
+        frame.dispose();
+        // Llamando al método encenderTPV de la clase FuncionesTPV
+        FuncionesTPV funcionesTPV = ObjetosTPV.inicializarTPV();
+        funcionesTPV.encenderTPV();
+        
+        FuncionesCarrito.noComprar();
     }
 }
