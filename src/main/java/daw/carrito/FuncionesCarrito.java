@@ -2,7 +2,6 @@ package daw.carrito;
 
 import daw.modos.FuncionesUsuario;
 import daw.productos.Producto;
-
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
 public class FuncionesCarrito {
 
     private static List<Producto> carrito = new ArrayList<>();
-    
+
     private FuncionesUsuario funcionesUsuario;
 
     public FuncionesCarrito(FuncionesUsuario funcionesUsuario) {
@@ -74,5 +73,9 @@ public class FuncionesCarrito {
             // Imprimir la excepción en la terminal
             System.out.println("Excepción NullPointerException: " + e.getMessage());
         }
+    }
+
+    public static void noComprar() {
+        carrito.clear();
     }
 }
