@@ -2,6 +2,8 @@ package daw.carrito;
 
 import daw.modos.FuncionesUsuario;
 import daw.productos.Producto;
+import daw.tpv.FuncionesTPV;
+import daw.tpv.ObjetosTPV;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
@@ -23,7 +25,7 @@ public class FuncionesCarrito {
 
     public FuncionesCarrito(FuncionesUsuario funcionesUsuario) {
         this.funcionesUsuario = funcionesUsuario;
-        listaDeTarjetas.add(new AtributosTarjeta(1234, LocalDate.of(2025, 12, 1), 123, 1000, "Juan Perez"));
+        listaDeTarjetas.add(new AtributosTarjeta(1234, LocalDate.of(2025, 12, 1), 123, 100, "Juan Perez"));
         listaDeTarjetas.add(new AtributosTarjeta(5432, LocalDate.of(2025, 10, 4), 456, 500, "Maria Rodriguez"));
         listaDeTarjetas.add(new AtributosTarjeta(1122, LocalDate.of(2025, 8, 23), 789, 200, "Pedro Gomez"));
         listaDeTarjetas.add(new AtributosTarjeta(3322, LocalDate.of(2025, 5, 22), 234, 1500, "Ana Martinez"));
@@ -125,20 +127,21 @@ public class FuncionesCarrito {
                                     // Realizar la compra descontando el saldo
                                     tarjeta.setSaldo(tarjeta.getSaldo() - precioTotalConIVA);
 
-                                    // Limpiar el carrito después de la compra
-                                    carrito.clear();
-
                                     // Mostrar mensaje de compra realizada
                                     JOptionPane.showMessageDialog(null, "Compra realizada. Gracias por su compra!");
 
                                     // Llamar al método ticket.
                                     ticket();
 
+                                    // Limpiar el carrito después de la compra
+                                    carrito.clear();
+
                                     // Salir del bucle
                                     tarjetaValida = true;
-                                    
+
                                     // Llamar al método encenderTPV-
-                                    
+                                    llamarEncenderTPV();
+
                                 } else {
                                     // Mostrar mensaje de saldo insuficiente
                                     JOptionPane.showMessageDialog(null, "Saldo insuficiente. Ingrese otra tarjeta.");
@@ -235,5 +238,12 @@ public class FuncionesCarrito {
     // Método para generar un ID de pedido único
     private static int generarIdPedido() {
         return idPedidoContador++;
+    }
+
+    // Método para volver al Menú Inicial
+    private static void llamarEncenderTPV() {
+        // Llamando al método encenderTPV de la clase FuncionesTPV
+        FuncionesTPV funcionesTPV = ObjetosTPV.inicializarTPV();
+        funcionesTPV.encenderTPV();
     }
 }
