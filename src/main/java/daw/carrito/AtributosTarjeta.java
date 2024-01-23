@@ -8,13 +8,15 @@ import java.util.Objects;
  * @author acebedo
  */
 public class AtributosTarjeta {
-
+    
+    // Atributos.
     private int numeroTarjeta;
     private LocalDate fechaVencimiento;
     private int cvv;
     private double saldo;
     private String nombreTitular;
 
+    // Constructor.
     public AtributosTarjeta(int numeroTarjeta, LocalDate fechaVencimiento, int cvv, double saldo, String nombreTitular) {
         this.numeroTarjeta = numeroTarjeta;
         this.fechaVencimiento = fechaVencimiento;
@@ -23,6 +25,7 @@ public class AtributosTarjeta {
         this.nombreTitular = nombreTitular;
     }
 
+    // Getters y Setters.
     public int getNumeroTarjeta() {
         return numeroTarjeta;
     }
@@ -63,6 +66,7 @@ public class AtributosTarjeta {
         this.nombreTitular = nombreTitular;
     }
 
+    // hashCode.
     @Override
     public int hashCode() {
         int hash = 7;
@@ -74,6 +78,7 @@ public class AtributosTarjeta {
         return hash;
     }
 
+    // equals.
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -101,6 +106,7 @@ public class AtributosTarjeta {
         return Objects.equals(this.fechaVencimiento, other.fechaVencimiento);
     }
 
+    // to String.
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
