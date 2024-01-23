@@ -125,11 +125,6 @@ public class FuncionesTPV {
 
     }
 
-    // Método para realizar una compra (REVISAR).
-    public void realizarCompra() {
-        JOptionPane.showMessageDialog(null, "Compra Realizada");
-    }
-
     /*
         Método para validar si la contraseña generada cumple con los requisitos.
         REQUISITOS:
