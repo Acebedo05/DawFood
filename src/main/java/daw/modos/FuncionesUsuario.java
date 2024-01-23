@@ -51,7 +51,7 @@ public class FuncionesUsuario {
             frame.dispose();
         });
         agregarBoton(panel, "Comprar", e -> {
-            noComprar(frame);
+            procesarPago();
             frame.dispose();
         });
         agregarBoton(panel, "No Comprar", e -> {
@@ -112,7 +112,11 @@ public class FuncionesUsuario {
         // Llamando al método encenderTPV de la clase FuncionesTPV
         FuncionesTPV funcionesTPV = ObjetosTPV.inicializarTPV();
         funcionesTPV.encenderTPV();
-        
+
         FuncionesCarrito.noComprar();
+    }
+
+    private void procesarPago() {
+        funcionesCarrito.procesarPago();
     }
 }
