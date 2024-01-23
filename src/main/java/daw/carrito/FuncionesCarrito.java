@@ -3,6 +3,7 @@ package daw.carrito;
 import daw.modos.FuncionesUsuario;
 import daw.productos.Producto;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,10 @@ public class FuncionesCarrito {
 
     private static List<Producto> carrito = new ArrayList<>();
     private static List<AtributosTarjeta> listaDeTarjetas = new ArrayList<>();
+    private static List<AtributosTicket> listaDeTickets = new ArrayList<>();
 
     private FuncionesUsuario funcionesUsuario;
+    private static int idPedidoContador = 1;
 
     public FuncionesCarrito(FuncionesUsuario funcionesUsuario) {
         this.funcionesUsuario = funcionesUsuario;
@@ -122,17 +125,20 @@ public class FuncionesCarrito {
                                     // Realizar la compra descontando el saldo
                                     tarjeta.setSaldo(tarjeta.getSaldo() - precioTotalConIVA);
 
-                                    // Llamar al método ticket.
-                                    ticket();
-
                                     // Limpiar el carrito después de la compra
                                     carrito.clear();
 
                                     // Mostrar mensaje de compra realizada
                                     JOptionPane.showMessageDialog(null, "Compra realizada. Gracias por su compra!");
 
+                                    // Llamar al método ticket.
+                                    ticket();
+
                                     // Salir del bucle
                                     tarjetaValida = true;
+                                    
+                                    // Llamar al método encenderTPV-
+                                    
                                 } else {
                                     // Mostrar mensaje de saldo insuficiente
                                     JOptionPane.showMessageDialog(null, "Saldo insuficiente. Ingrese otra tarjeta.");
@@ -201,9 +207,33 @@ public class FuncionesCarrito {
         return precioTotalConIVA;
     }
 
-    // Método para el ticket (Por Hacer)
+    // Método para el ticket
     private static void ticket() {
+        double precioFinal = calcularPrecioTotalConIVA();
+        int idPedido = generarIdPedido();
+        LocalDateTime fechaYHoraOperacion = LocalDateTime.now();
+
+        StringBuilder productosComprados = new StringBuilder("\nProductos Seleccionados:\n");
+        for (Producto producto : carrito) {
+            productosComprados.append("ID: ").append(producto.getId()).append(" -- ");
+            productosComprados.append("Nombre: ").append(producto.getNombre()).append(" -- ");
+            productosComprados.append("Descripción: ").append(producto.getDescripcion()).append(" -- ");
+            productosComprados.append("Precio: ").append(producto.getPrecio()).append(" € (sin IVA) -- ");
+            productosComprados.append("IVA: ").append(producto.getIva()).append("\n");
+        }
+
+        AtributosTicket atributosTicket = new AtributosTicket(precioFinal, idPedido, fechaYHoraOperacion, productosComprados.toString());
+
+        // Agregar el ticket a la lista
+        listaDeTickets.add(atributosTicket);
+
+        // Mostrar el ticket utilizando JOptionPane
+        JOptionPane.showMessageDialog(null, atributosTicket.toString(), "Ticket de Compra", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
+    // Método para generar un ID de pedido único
+    private static int generarIdPedido() {
+        return idPedidoContador++;
+    }
 }
