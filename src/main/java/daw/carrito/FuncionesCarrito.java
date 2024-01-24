@@ -93,80 +93,109 @@ public class FuncionesCarrito {
 
     // Método para realizar el proceso de pago
     public static void procesarPago() {
-        boolean tarjetaValida = false;
+        double precioTotal = calcularPrecioTotalConIVA();
 
-        while (!tarjetaValida) {
-            try {
-                // Solicitar al usuario el número de tarjeta
-                String stringNumTarj = JOptionPane.showInputDialog("Ingrese el número de su tarjeta:");
+        if (precioTotal != 0) {
+            boolean tarjetaValida = false;
+            int intentos = 0;
 
-                // Verificar si la entrada es un número
-                if (!esNumero(stringNumTarj)) {
-                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el número de tarjeta.", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    int numeroTarjeta = Integer.parseInt(stringNumTarj);
+            while (!tarjetaValida && intentos < 2) {
+                try {
+                    // Solicitar al usuario el número de tarjeta
+                    String stringNumTarj = JOptionPane.showInputDialog("Ingrese el número de su tarjeta:");
 
-                    // Verificar si la tarjeta con ese número existe
-                    AtributosTarjeta tarjeta = obtenerTarjetaPorNumero(numeroTarjeta);
+                    // Verificar si la entrada es un número
+                    if (!esNumero(stringNumTarj)) {
+                        JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido para el número de tarjeta.", "Error", JOptionPane.ERROR_MESSAGE);
+                        intentos++;
+                    } else {
+                        int numeroTarjeta = Integer.parseInt(stringNumTarj);
 
-                    if (tarjeta != null) {
+                        // Verificar si la tarjeta con ese número existe
+                        AtributosTarjeta tarjeta = obtenerTarjetaPorNumero(numeroTarjeta);
 
-                        // Si la tarjeta existe, solicitar la fecha de caducidad y el CVV
-                        String fechaCaducidad = JOptionPane.showInputDialog("Ingrese la fecha de caducidad (MM/YY):");
-                        String cvv = JOptionPane.showInputDialog("Ingrese el CVV:");
+                        if (tarjeta != null) {
 
-                        // Verificar que la fecha de caducidad y el CVV no sean nulos o vacíos
-                        if (fechaCaducidad != null && cvv != null && !fechaCaducidad.isEmpty() && !cvv.isEmpty()) {
-                            // Verificar la fecha de caducidad y el CVV
-                            if (verificarFechaYCVV(tarjeta, fechaCaducidad, cvv)) {
-                                // Calcular el precio total con IVA
-                                double precioTotalConIVA = calcularPrecioTotalConIVA();
+                            // Si la tarjeta existe, solicitar la fecha de caducidad y el CVV
+                            String fechaCaducidad = JOptionPane.showInputDialog("Ingrese la fecha de caducidad (MM/YY):");
+                            String cvv = JOptionPane.showInputDialog("Ingrese el CVV:");
 
-                                // Verificar si hay suficiente saldo para la compra
-                                if (tarjeta.getSaldo() >= precioTotalConIVA) {
-                                    // Realizar la compra descontando el saldo
-                                    tarjeta.setSaldo(tarjeta.getSaldo() - precioTotalConIVA);
+                            // Verificar que la fecha de caducidad y el CVV no sean nulos o vacíos
+                            if (fechaCaducidad != null && cvv != null && !fechaCaducidad.isEmpty() && !cvv.isEmpty()) {
+                                // Verificar la fecha de caducidad y el CVV
+                                if (verificarFechaYCVV(tarjeta, fechaCaducidad, cvv)) {
+                                    // Calcular el precio total con IVA
+                                    double precioTotalConIVA = calcularPrecioTotalConIVA();
 
-                                    // Mostrar mensaje de compra realizada
-                                    JOptionPane.showMessageDialog(null, "Compra realizada. Gracias por su compra!");
+                                    // Verificar si hay suficiente saldo para la compra
+                                    if (tarjeta.getSaldo() >= precioTotalConIVA) {
+                                        // Realizar la compra descontando el saldo
+                                        tarjeta.setSaldo(tarjeta.getSaldo() - precioTotalConIVA);
 
-                                    // Llamar al método ticket.
-                                    ticket();
+                                        // Mostrar mensaje de compra realizada
+                                        JOptionPane.showMessageDialog(null, "Compra realizada. Gracias por su compra!");
 
-                                    // Limpiar el carrito después de la compra
-                                    carrito.clear();
+                                        // Llamar al método ticket.
+                                        ticket();
 
-                                    // Salir del bucle
-                                    tarjetaValida = true;
+                                        // Limpiar el carrito después de la compra
+                                        carrito.clear();
 
-                                    // Llamar al método encenderTPV-
-                                    llamarEncenderTPV();
+                                        // Salir del bucle
+                                        tarjetaValida = true;
 
+                                        // Llamar al método encenderTPV.
+                                        llamarEncenderTPV();
+
+                                    } else {
+                                        // Mostrar mensaje de saldo insuficiente
+                                        JOptionPane.showMessageDialog(null, "Saldo insuficiente. Ingrese otra tarjeta.");
+                                        intentos++;
+                                    }
                                 } else {
-                                    // Mostrar mensaje de saldo insuficiente
-                                    JOptionPane.showMessageDialog(null, "Saldo insuficiente. Ingrese otra tarjeta.");
+                                    // Mostrar mensaje de fecha de caducidad o CVV incorrecto
+                                    JOptionPane.showMessageDialog(null, "Fecha de caducidad o CVV incorrecto. Ingrese otra tarjeta.");
+                                    intentos++;
                                 }
                             } else {
-                                // Mostrar mensaje de fecha de caducidad o CVV incorrecto
+                                // Mostrar mensaje de fecha de caducidad o CVV nulo o vacío
                                 JOptionPane.showMessageDialog(null, "Fecha de caducidad o CVV incorrecto. Ingrese otra tarjeta.");
+                                intentos++;
                             }
-                        } else {
-                            // Mostrar mensaje de fecha de caducidad o CVV nulo o vacío
-                            JOptionPane.showMessageDialog(null, "Fecha de caducidad o CVV incorrecto. Ingrese otra tarjeta.");
-                        }
 
-                    } else {
-                        // Mostrar mensaje de tarjeta no encontrada
-                        JOptionPane.showMessageDialog(null, "Tarjeta no encontrada. Ingrese otra tarjeta.");
+                        } else {
+                            // Mostrar mensaje de tarjeta no encontrada
+                            JOptionPane.showMessageDialog(null, "Tarjeta no encontrada. Ingrese otra tarjeta.");
+                            intentos++;
+                        }
                     }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    intentos++;
                 }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
             }
+
+            if (intentos >= 2) {
+                // Limpiar el carrito después de la compra
+                carrito.clear();
+                
+                // Llamar al método encenderTPV.
+                llamarEncenderTPV();
+            }
+
+        } else {
+            // Mostrar mensaje de carrito vacío
+            JOptionPane.showMessageDialog(null, "El carrito está vacío. No se puede realizar la compra.");
+
+            // Limpiar el carrito después de la compra
+            carrito.clear();
+
+            // Llamar al método encenderTPV.
+            llamarEncenderTPV();
         }
     }
 
-    // Método para verificar si una cadena es un número
+// Método para verificar si una cadena es un número
     private static boolean esNumero(String cadena) {
         try {
             Integer.parseInt(cadena);
