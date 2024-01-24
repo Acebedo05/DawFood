@@ -96,12 +96,12 @@ public class AtributosTicket {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Restaurante Jose Aurelio, ticket de compra:\n\n");
-        sb.append("Numero de compra: ").append(idPedido);
-        sb.append("   Precio Total: ").append(precioFinal);
+        sb.append("Restaurante DawFood, Ticket de compra:\n\n");
+        sb.append("Numero de pedido: ").append(idPedido);
         sb.append("\nHorarioOperacion -> ").append(fechaYHoraOperacion);
+        sb.append("\nPrecio Total: ").append(precioFinal).append(" €");
         sb.append("\n" + productosComprados);
         return sb.toString();
     }
-    
+
 }
