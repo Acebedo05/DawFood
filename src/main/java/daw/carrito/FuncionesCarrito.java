@@ -178,7 +178,7 @@ public class FuncionesCarrito {
             if (intentos >= 2) {
                 // Limpiar el carrito después de la compra
                 carrito.clear();
-                
+
                 // Llamar al método encenderTPV.
                 llamarEncenderTPV();
             }
@@ -274,5 +274,88 @@ public class FuncionesCarrito {
         // Llamando al método encenderTPV de la clase FuncionesTPV
         FuncionesTPV funcionesTPV = ObjetosTPV.inicializarTPV();
         funcionesTPV.encenderTPV();
+    }
+
+    // Método para consultar las ventas realizadas.
+    public static void consultarVentas() {
+        // Preguntar al usuario qué tipo de consulta desea realizar
+        String[] opciones = {"Ver las ventas de un día concreto", "Ver las ventas de hasta una fecha concreta", "Ver todas las ventas"};
+        int seleccion = JOptionPane.showOptionDialog(null, "¿Qué prefieres?", "Consulta de Ventas", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+
+        LocalDate fechaInicio = null;
+        LocalDate fechaFin = null;
+        boolean mostrarTodos = false;
+
+        switch (seleccion) {
+            case 0:
+                // Ver las ventas de un día concreto
+                String fechaStr = JOptionPane.showInputDialog("Ingrese la fecha en formato YYYY-MM-DD:");
+                try {
+                    fechaInicio = LocalDate.parse(fechaStr);
+                    fechaFin = fechaInicio.plusDays(1);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Fecha inválida. Mostrando todas las ventas.");
+                    mostrarTodos = true;
+                }
+                break;
+
+            case 1:
+                // Ver las ventas hasta una fecha concreta
+                String fechaFinStr = JOptionPane.showInputDialog("Ingrese la fecha hasta la cual desea ver las ventas en formato YYYY-MM-DD:");
+                try {
+                    fechaFin = LocalDate.parse(fechaFinStr).plusDays(1);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Fecha inválida. Mostrando todas las ventas.");
+                    mostrarTodos = true;
+                }
+                break;
+
+            case 2:
+                // Ver todas las ventas
+                mostrarTodos = true;
+                break;
+
+            default:
+                // Opción no válida, mostrar todas las ventas
+                mostrarTodos = true;
+                break;
+        }
+
+        // Filtrar y mostrar los tickets.
+        List<AtributosTicket> ticketsFiltrados = filtrarTickets(fechaInicio, fechaFin, mostrarTodos);
+
+        // Verificar si hay tickets registrados.
+        if (ticketsFiltrados.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay ventas registradas en el período especificado.");
+        } else {
+            // Mostrar los tickets.
+            StringBuilder mensaje = new StringBuilder("Ventas Realizadas:\n\n");
+
+            for (AtributosTicket ticket : ticketsFiltrados) {
+                mensaje.append("ID Pedido: ").append(ticket.getIdPedido()).append("\n");
+                mensaje.append("Fecha y Hora: ").append(ticket.getFechaYHoraOperacion()).append("\n");
+                mensaje.append("Productos:\n").append(ticket.getProductosComprados()).append("\n");
+                mensaje.append("Precio Final: ").append(ticket.getPrecioFinal()).append(" €\n\n");
+            }
+
+            JOptionPane.showMessageDialog(null, mensaje.toString(), "Ventas Realizadas", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    // Método para filtrar los tickets según las fechas y mostrarTodos
+    private static List<AtributosTicket> filtrarTickets(LocalDate fechaInicio, LocalDate fechaFin, boolean mostrarTodos) {
+        List<AtributosTicket> ticketsFiltrados = new ArrayList<>();
+
+        for (AtributosTicket ticket : listaDeTickets) {
+            LocalDate fechaOperacion = ticket.getFechaYHoraOperacion().toLocalDate();
+
+            if ((fechaInicio == null || fechaOperacion.isAfter(fechaInicio) || fechaOperacion.isEqual(fechaInicio))
+                    && (fechaFin == null || fechaOperacion.isBefore(fechaFin) || fechaOperacion.isEqual(fechaFin))
+                    && (mostrarTodos || fechaOperacion.isEqual(LocalDate.now()))) {
+                ticketsFiltrados.add(ticket);
+            }
+        }
+
+        return ticketsFiltrados;
     }
 }
