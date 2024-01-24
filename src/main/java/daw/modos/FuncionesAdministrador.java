@@ -1,5 +1,7 @@
 package daw.modos;
 
+import daw.productos.MenuComida;
+import daw.carrito.FuncionesCarrito;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import daw.tpv.AtributosTPV;
@@ -19,49 +21,20 @@ import javax.swing.JPanel;
 public class FuncionesAdministrador {
 
     private AtributosTPV atributosTPV;
+    private FuncionesCarrito funcionesCarrito;
+    private MenuComida menuComida;
+    private FuncionesTPV funcionesTPV;
 
     public FuncionesAdministrador(AtributosTPV atributosTPV) {
         this.atributosTPV = atributosTPV;
-    }
-
-    // Método para ver la hora actual del TPV.
-    public void verHoraTPV() {
-        Date fechaHoraActual = atributosTPV.getFechaHoraActual();
-        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
-        String horaActual = formatoHora.format(fechaHoraActual);
-
-        JOptionPane.showMessageDialog(null, "La hora actual del TPV es: " + horaActual);
-    }
-
-    // Método para consultar las ventas realizadas.
-    public void consultarVentas() {
-        // Por Hacer.
-        System.out.println("consultarVentas");
-    }
-
-    // Método para borrar productos existentes.
-    public void borrarProductos() {
-        // Por Hacer.
-        System.out.println("borrarProductos");
-    }
-
-    // Método para añadir nuevos productos.
-    public void añadirProductos() {
-        // Por Hacer.
-        System.out.println("añadirProductos");
-    }
-
-    // Método para cambaiar datos de los productos.
-    public void cambiarDatosProductos() {
-        // Por Hacer.
-        System.out.println("cambiarDatosProductos");
+        this.menuComida = new MenuComida(this.funcionesTPV);
     }
 
     // Método para mostrar un menú con las obciones que tiene el administrador.
     public void mostrarMenu() {
         // Crear la ventana del menú.
         JFrame frame = new JFrame("Menú Administrador");
-        
+
         // Crear un panel para colocar los botones.
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
@@ -106,5 +79,55 @@ public class FuncionesAdministrador {
         System.out.println("Apagando TPV...");
         System.exit(0);
     }
-    
+
+    // Método para ver la hora actual del TPV.
+    public void verHoraTPV() {
+        Date fechaHoraActual = atributosTPV.getFechaHoraActual();
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+        String horaActual = formatoHora.format(fechaHoraActual);
+
+        JOptionPane.showMessageDialog(null, "La hora actual del TPV es: " + horaActual);
+    }
+
+    // Método para consultar las ventas realizadas.
+    public static void consultarVentas() {
+        FuncionesCarrito.consultarVentas();
+    }
+
+    // Método para añadir nuevos productos.
+    public void añadirProductos() {
+        // Preguntar al usuario qué tipo de producto desea añadir
+        String tipoProducto = JOptionPane.showInputDialog("¿Qué tipo de producto desea añadir? (Bebida, Comida o Postre)").toLowerCase();
+
+        // Llamar al método correspondiente según la elección del usuario
+        switch (tipoProducto) {
+            case "bebida":
+                //menuComida.añadirProductoAComidas();
+                break;
+            case "comida":
+                //menuComida.añadirProductoAComidas();
+                break;
+            case "postre":
+                //menuComida.añadirProductoAComidas();
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Tipo de producto no válido.");
+                mostrarMenu();
+
+                break;
+        }
+    }
+
+    // Método para borrar productos existentes.
+    public void borrarProductos() {
+        String idProductoAEliminar = JOptionPane.showInputDialog("Ingrese el ID del producto que desea eliminar:");
+        //menuComida.borrarProducto(idProductoAEliminar);
+    }
+
+    // Método para cambaiar datos de los productos.
+    public void cambiarDatosProductos() {
+        // Por Hacer.
+        System.out.println("cambiarDatosProductos");
+    }
+
 }
