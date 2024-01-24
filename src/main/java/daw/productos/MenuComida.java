@@ -26,18 +26,15 @@ public class MenuComida {
         // Almacena la referencia a FuncionesTPV.
         this.funcionesTPV = funcionesTPV;
         this.funcionesCarrito = new FuncionesCarrito(this.funcionesUsuario);
+        // Inicializar las listas.
+        inicializarComidas();
     }
 
     // Listas para almacenar las diferentes categorías de comidas.
-    private List<Producto> comidas;
+    private List<Producto> comidas = new ArrayList<>();
 
     // Constructor de la clase, se inicializan las listas y se llama al método principal.
     public void MenuComida() {
-        this.comidas = new ArrayList<>();
-
-        // Inicializar las listas.
-        inicializarComidas();
-
         // Mostrar el menú principal de comidas.
         menuSeleccionComidas();
     }
@@ -260,5 +257,45 @@ public class MenuComida {
         // Volver al menú de selección de pizzas.
         menuSeleccionPizzas();
     }
+
+    /*
     
+    // Metodo para añadir nuevo producto a comidas.
+    public void añadirProductoAComidas() {
+
+        String id = JOptionPane.showInputDialog("Ingrese el ID del nuevo producto:");
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre del nuevo producto:");
+        double precio = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio del nuevo producto:"));
+        boolean enStock = Boolean.parseBoolean(JOptionPane.showInputDialog("¿El producto está en stock? (true/false):"));
+        String descripcion = JOptionPane.showInputDialog("Ingrese la descripción del nuevo producto:");
+        String categoria = JOptionPane.showInputDialog("Ingrese la categoría del nuevo producto:");
+        double iva = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el porcentaje de IVA del nuevo producto:"));
+        String subcategoria = JOptionPane.showInputDialog("Ingrese la subcategoría del nuevo producto:");
+
+        Producto nuevoProducto = new Producto(id, nombre, precio, enStock, descripcion, categoria, iva, subcategoria);
+        comidas.add(nuevoProducto);
+
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(null, "Producto añadido correctamente a la lista de comidas.");
+
+    }
+
+    // Metodo para borrar producto de comidas.
+    public void borrarProducto(String idProducto) {
+        // Iterar sobre la lista de comidas para encontrar el producto con el ID.
+        for (Producto producto : comidas) {
+            if (producto.getId().equals(idProducto)) {
+                // Eliminar el producto de la lista.
+                comidas.remove(producto);
+
+                JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+                return;
+            }
+        }
+
+        // Si el producto con el ID proporcionado no se encuentra, mostrar un mensaje de error.
+        JOptionPane.showMessageDialog(null, "No se encontró ningún producto con el ID proporcionado.");
+    }
+
+     */
 }
