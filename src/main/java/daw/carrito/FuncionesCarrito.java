@@ -34,6 +34,12 @@ public class FuncionesCarrito {
 
     // Método para agregar productos seleccionados
     public static void agregarProductoAlCarrito(Producto producto) {
+        // Verificar si el producto está en stock
+        if (!producto.isEnStock()) {
+            JOptionPane.showMessageDialog(null, "El producto '" + producto.getNombre() + "' no está disponible en stock.", "Producto no disponible", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         // Pedir al usuario que ingrese la cantidad utilizando JOptionPane
         String cantidada = JOptionPane.showInputDialog("Ingrese la cantidad de '" + producto.getNombre() + "' que desea agregar al carrito:");
 
