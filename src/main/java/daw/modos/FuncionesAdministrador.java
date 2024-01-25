@@ -105,7 +105,7 @@ public class FuncionesAdministrador {
                 //menuComida.añadirProductoAComidas();
                 break;
             case "comida":
-                //menuComida.añadirProductoAComidas();
+                menuComida.añadirProductoAComidas();
                 break;
             case "postre":
                 //menuComida.añadirProductoAComidas();
@@ -120,8 +120,8 @@ public class FuncionesAdministrador {
 
     // Método para borrar productos existentes.
     public void borrarProductos() {
-        String idProductoAEliminar = JOptionPane.showInputDialog("Ingrese el ID del producto que desea eliminar:");
-        //menuComida.borrarProducto(idProductoAEliminar);
+        String nombreProductoAEliminar = JOptionPane.showInputDialog("Ingrese el nombre del producto que desea eliminar:");
+        menuComida.borrarProducto(nombreProductoAEliminar);
     }
 
     // Método para cambaiar datos de los productos.
