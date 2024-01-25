@@ -26,12 +26,10 @@ public class MenuComida {
         // Almacena la referencia a FuncionesTPV.
         this.funcionesTPV = funcionesTPV;
         this.funcionesCarrito = new FuncionesCarrito(this.funcionesUsuario);
-        // Inicializar las listas.
-        inicializarComidas();
     }
 
     // Listas para almacenar las diferentes categorías de comidas.
-    private List<Producto> comidas = new ArrayList<>();
+    private static List<Producto> comidas = new ArrayList<>();
 
     // Constructor de la clase, se inicializan las listas y se llama al método principal.
     public void MenuComida() {
@@ -39,8 +37,13 @@ public class MenuComida {
         menuSeleccionComidas();
     }
 
+    public static void llamarInicializarComidas() {
+        // Inicializar las listas.
+        inicializarComidas();
+    }
+
     // Inicializar la lista de pizzas con datos.
-    private void inicializarComidas() {
+    private static void inicializarComidas() {
         comidas.add(new Producto("P01", "Pizza 4 Quesos", 8.99, true, "Pizza con cuatro tipos de quesos", "Comida", 0.10, "Pizza"));
         comidas.add(new Producto("P02", "Pizza Margarita", 9.99, true, "Pizza con queso y tomate", "Comida", 0.10, "Pizza"));
         comidas.add(new Producto("P03", "Pizza Boloñesa", 10.99, true, "Pizza con salsa boloñesa", "Comida", 0.10, "Pizza"));
@@ -258,19 +261,17 @@ public class MenuComida {
         menuSeleccionPizzas();
     }
 
-    /*
-    
     // Metodo para añadir nuevo producto a comidas.
     public void añadirProductoAComidas() {
 
         String id = JOptionPane.showInputDialog("Ingrese el ID del nuevo producto:");
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre del nuevo producto:");
         double precio = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio del nuevo producto:"));
-        boolean enStock = Boolean.parseBoolean(JOptionPane.showInputDialog("¿El producto está en stock? (true/false):"));
+        boolean enStock = true;
         String descripcion = JOptionPane.showInputDialog("Ingrese la descripción del nuevo producto:");
-        String categoria = JOptionPane.showInputDialog("Ingrese la categoría del nuevo producto:");
-        double iva = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el porcentaje de IVA del nuevo producto:"));
-        String subcategoria = JOptionPane.showInputDialog("Ingrese la subcategoría del nuevo producto:");
+        String categoria = "Comida";
+        double iva = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el porcentaje de IVA del nuevo producto (Ej: '0.10'):"));
+        String subcategoria = JOptionPane.showInputDialog("Ingrese la subcategoría del nuevo producto (Hamburguesa / Pizza / Kebab):");
 
         Producto nuevoProducto = new Producto(id, nombre, precio, enStock, descripcion, categoria, iva, subcategoria);
         comidas.add(nuevoProducto);
@@ -281,10 +282,10 @@ public class MenuComida {
     }
 
     // Metodo para borrar producto de comidas.
-    public void borrarProducto(String idProducto) {
+    public void borrarProducto(String nombreProducto) {
         // Iterar sobre la lista de comidas para encontrar el producto con el ID.
         for (Producto producto : comidas) {
-            if (producto.getId().equals(idProducto)) {
+            if (producto.getNombre().equalsIgnoreCase(nombreProducto)) {
                 // Eliminar el producto de la lista.
                 comidas.remove(producto);
 
@@ -294,8 +295,7 @@ public class MenuComida {
         }
 
         // Si el producto con el ID proporcionado no se encuentra, mostrar un mensaje de error.
-        JOptionPane.showMessageDialog(null, "No se encontró ningún producto con el ID proporcionado.");
+        JOptionPane.showMessageDialog(null, "No se encontró ningún producto con el nombre proporcionado.");
     }
 
-     */
 }
