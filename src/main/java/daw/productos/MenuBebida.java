@@ -29,21 +29,21 @@ public class MenuBebida {
     }
 
     // Listas para almacenar las diferentes categorías de bebidas.
-    private List<Producto> bebidas;
+    private static List<Producto> bebidas = new ArrayList<>();
 
     // Constructor de la clase, se inicializan las listas y se llama al método principal.
     public void MenuBebida() {
-        this.bebidas = new ArrayList<>();
-
-        // Inicializar las listas.
-        inicializarBebidas();
-
         // Mostrar el menú principal de bebidas.
         menuSeleccionBebidas();
     }
 
+    public static void llamarInicializarBebidas() {
+        // Inicializar las listas.
+        inicializarBebidas();
+    }
+
     // Inicializar la lista de bebidas alcohólicas con datos.
-    private void inicializarBebidas() {
+    private static void inicializarBebidas() {
         bebidas.add(new Producto("A01", "Vino", 4.99, true, "Vino", "Bebida", 0.21, "Alcoholica"));
         bebidas.add(new Producto("A02", "Sidra", 4.99, true, "Sidra", "Bebida", 0.21, "Alcoholica"));
         bebidas.add(new Producto("A03", "Cerveza", 1.99, true, "Cerveza", "Bebida", 0.21, "Alcoholica"));
@@ -203,7 +203,7 @@ public class MenuBebida {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-    
+
     // Método para consultar precios de alcoholicas    
     private void consultarPreciosAlcoholicas() {
         // Obtener precios de alcoholicas desde la lista
@@ -260,4 +260,117 @@ public class MenuBebida {
         // Volver al menú de selección de aguas.
         menuSeleccionAguas();
     }
+
+    // Metodo para añadir nuevo producto a bebidas.
+    public void añadirProductoABebidas() {
+
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre del nuevo producto:");
+        double precio = obtenerPrecioValido();
+        boolean enStock = true;
+        String descripcion = JOptionPane.showInputDialog("Ingrese la descripción del nuevo producto:");
+        String categoria = "Comida";
+        double iva = obtenerIVAValido();
+        String subcategoria = obtenerSubcategoriaValida();
+        String id = obtenerNuevoID();
+
+        Producto nuevoProducto = new Producto(id, nombre, precio, enStock, descripcion, categoria, iva, subcategoria);
+        bebidas.add(nuevoProducto);
+
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(null, "Producto añadido correctamente a la lista de bebidas.");
+
+    }
+
+    // Método para obtener un precio válido (mayor o igual a 0)
+    private double obtenerPrecioValido() {
+        double precio;
+        while (true) {
+            try {
+                precio = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio del nuevo producto:"));
+                if (precio < 0) {
+                    throw new NumberFormatException();
+                }
+                break;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Ingrese un precio válido igual o mayor que 0.");
+            }
+        }
+        return precio;
+    }
+
+    // Método para obtener un porcentaje de IVA válido (mayor o igual a 0)
+    private double obtenerIVAValido() {
+        double iva;
+        while (true) {
+            try {
+                iva = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el porcentaje de IVA del nuevo producto (Ej: '0.10'):"));
+                if (iva < 0) {
+                    throw new NumberFormatException();
+                }
+                break;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Ingrese un porcentaje de IVA válido igual o mayor que 0.");
+            }
+        }
+        return iva;
+    }
+
+    // Método para obtener una subcategoría válida ("Alcoholicas", "Aguas" o "Refrescos")
+    private String obtenerSubcategoriaValida() {
+        String subcategoria;
+        while (true) {
+            subcategoria = JOptionPane.showInputDialog("Ingrese la subcategoría del nuevo producto (Alcoholica / Refresco / Agua):");
+
+            subcategoria = subcategoria.toLowerCase();
+            subcategoria = subcategoria.substring(0, 1).toUpperCase() + subcategoria.substring(1);
+
+            if ("Alcoholica".equals(subcategoria) || "Refresco".equals(subcategoria) || "Agua".equals(subcategoria)) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una subcategoría válida (Alcoholica / Refresco / Agua).");
+            }
+        }
+        return subcategoria;
+    }
+
+    // Método para obtener un ID.
+    private String obtenerNuevoID() {
+        String nuevoID;
+        while (true) {
+            nuevoID = JOptionPane.showInputDialog("Ingrese el nuevo ID (EJ: (Alcoholica: A01 // Refresco: R01 // Agua: AG01)):");
+
+            boolean idExiste = false;
+            for (Producto producto : bebidas) {
+                if (producto.getId().equalsIgnoreCase(nuevoID)) {
+                    idExiste = true;
+                    break;
+                }
+            }
+
+            if (!idExiste) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "El ID ingresado ya existe.");
+            }
+        }
+        return nuevoID;
+    }
+
+    // Metodo para borrar producto de bebidas.
+    public void borrarProducto(String nombreProducto) {
+        // Iterar sobre la lista de bebidas para encontrar el producto con el Nombre.
+        for (Producto producto : bebidas) {
+            if (producto.getNombre().equalsIgnoreCase(nombreProducto)) {
+                // Eliminar el producto de la lista.
+                bebidas.remove(producto);
+
+                JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+                return;
+            }
+        }
+
+        // Si el producto con el ID proporcionado no se encuentra, mostrar un mensaje de error.
+        JOptionPane.showMessageDialog(null, "No se encontró ningún producto con el nombre proporcionado.");
+    }
+
 }
