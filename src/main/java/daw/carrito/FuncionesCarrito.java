@@ -123,7 +123,7 @@ public class FuncionesCarrito {
                         if (tarjeta != null) {
 
                             // Si la tarjeta existe, solicitar la fecha de caducidad y el CVV
-                            String fechaCaducidad = JOptionPane.showInputDialog("Ingrese la fecha de caducidad (MM/YY):");
+                            String fechaCaducidad = JOptionPane.showInputDialog("Ingrese la fecha de caducidad (YY/MM):");
                             String cvv = JOptionPane.showInputDialog("Ingrese el CVV:");
 
                             // Verificar que la fecha de caducidad y el CVV no sean nulos o vacíos
