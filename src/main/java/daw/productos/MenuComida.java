@@ -264,14 +264,14 @@ public class MenuComida {
     // Metodo para añadir nuevo producto a comidas.
     public void añadirProductoAComidas() {
 
-        String id = JOptionPane.showInputDialog("Ingrese el ID del nuevo producto:");
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre del nuevo producto:");
-        double precio = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio del nuevo producto:"));
+        double precio = obtenerPrecioValido();
         boolean enStock = true;
         String descripcion = JOptionPane.showInputDialog("Ingrese la descripción del nuevo producto:");
         String categoria = "Comida";
-        double iva = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el porcentaje de IVA del nuevo producto (Ej: '0.10'):"));
-        String subcategoria = JOptionPane.showInputDialog("Ingrese la subcategoría del nuevo producto (Hamburguesa / Pizza / Kebab):");
+        double iva = obtenerIVAValido();
+        String subcategoria = obtenerSubcategoriaValida();
+        String id = obtenerNuevoID();
 
         Producto nuevoProducto = new Producto(id, nombre, precio, enStock, descripcion, categoria, iva, subcategoria);
         comidas.add(nuevoProducto);
@@ -281,9 +281,84 @@ public class MenuComida {
 
     }
 
+    // Método para obtener un precio válido (mayor o igual a 0)
+    private double obtenerPrecioValido() {
+        double precio;
+        while (true) {
+            try {
+                precio = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio del nuevo producto:"));
+                if (precio < 0) {
+                    throw new NumberFormatException();
+                }
+                break;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Ingrese un precio válido igual o mayor que 0.");
+            }
+        }
+        return precio;
+    }
+
+    // Método para obtener un porcentaje de IVA válido (mayor o igual a 0)
+    private double obtenerIVAValido() {
+        double iva;
+        while (true) {
+            try {
+                iva = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el porcentaje de IVA del nuevo producto (Ej: '0.10'):"));
+                if (iva < 0) {
+                    throw new NumberFormatException();
+                }
+                break;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Ingrese un porcentaje de IVA válido igual o mayor que 0.");
+            }
+        }
+        return iva;
+    }
+
+    // Método para obtener una subcategoría válida ("Hamburguesas", "Pizzas" o "Kebabs")
+    private String obtenerSubcategoriaValida() {
+        String subcategoria;
+        while (true) {
+            subcategoria = JOptionPane.showInputDialog("Ingrese la subcategoría del nuevo producto (Hamburguesa / Pizza / Kebab):");
+
+            subcategoria = subcategoria.toLowerCase();
+            subcategoria = subcategoria.substring(0, 1).toUpperCase() + subcategoria.substring(1);
+
+            if ("Hamburguesa".equals(subcategoria) || "Pizza".equals(subcategoria) || "Kebab".equals(subcategoria)) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una subcategoría válida (Hamburguesa / Pizza / Kebab).");
+            }
+        }
+        return subcategoria;
+    }
+
+    // Método para obtener un ID.
+    private String obtenerNuevoID() {
+        String nuevoID;
+        while (true) {
+            nuevoID = JOptionPane.showInputDialog("Ingrese el nuevo ID (EJ: (Pizza: P01 // Hamburguesa: H01 // Kebab: K01)):");
+
+            boolean idExiste = false;
+            for (Producto producto : comidas) {
+                if (producto.getId().equalsIgnoreCase(nuevoID)) {
+                    idExiste = true;
+                    break;
+                }
+            }
+
+            if (!idExiste) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "El ID ingresado ya existe.");
+            }
+        }
+        return nuevoID;
+    }
+
     // Metodo para borrar producto de comidas.
     public void borrarProducto(String nombreProducto) {
-        // Iterar sobre la lista de comidas para encontrar el producto con el ID.
+        // Iterar sobre la lista de comidas para encontrar el producto con el Nombre.
         for (Producto producto : comidas) {
             if (producto.getNombre().equalsIgnoreCase(nombreProducto)) {
                 // Eliminar el producto de la lista.
