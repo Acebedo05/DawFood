@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import daw.productos.MenuBebida;
+import daw.productos.MenuPostre;
 
 /**
  *
@@ -23,11 +25,15 @@ public class FuncionesAdministrador {
     private AtributosTPV atributosTPV;
     private FuncionesCarrito funcionesCarrito;
     private MenuComida menuComida;
+    private MenuBebida menuBebida;
+    private MenuPostre menuPostre;
     private FuncionesTPV funcionesTPV;
 
     public FuncionesAdministrador(AtributosTPV atributosTPV) {
         this.atributosTPV = atributosTPV;
         this.menuComida = new MenuComida(this.funcionesTPV);
+        this.menuBebida = new MenuBebida(this.funcionesTPV);
+        this.menuPostre = new MenuPostre(this.funcionesTPV);
     }
 
     // Método para mostrar un menú con las obciones que tiene el administrador.
@@ -102,13 +108,13 @@ public class FuncionesAdministrador {
         // Llamar al método correspondiente según la elección del usuario
         switch (tipoProducto) {
             case "bebida":
-                //menuComida.añadirProductoAComidas();
+                menuBebida.añadirProductoABebidas();
                 break;
             case "comida":
                 menuComida.añadirProductoAComidas();
                 break;
             case "postre":
-                //menuComida.añadirProductoAComidas();
+                menuPostre.añadirProductoACaseros();
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Tipo de producto no válido.");
@@ -120,8 +126,30 @@ public class FuncionesAdministrador {
 
     // Método para borrar productos existentes.
     public void borrarProductos() {
-        String nombreProductoAEliminar = JOptionPane.showInputDialog("Ingrese el nombre del producto que desea eliminar:");
-        menuComida.borrarProducto(nombreProductoAEliminar);
+        // Preguntar al usuario qué tipo de producto desea borrar
+        String tipoProducto = JOptionPane.showInputDialog("¿Qué tipo de producto desea borrar? (Bebida, Comida o Postre)").toLowerCase();
+
+        // Llamar al método correspondiente según la elección del usuario
+        switch (tipoProducto) {
+            case "bebida":
+                String nombreProductoAEliminarBebida = JOptionPane.showInputDialog("Ingrese el nombre del producto que desea eliminar:");
+                menuBebida.borrarProducto(nombreProductoAEliminarBebida);
+                break;
+            case "comida":
+                String nombreProductoAEliminarComida = JOptionPane.showInputDialog("Ingrese el nombre del producto que desea eliminar:");
+                menuComida.borrarProducto(nombreProductoAEliminarComida);
+                break;
+            case "postre":
+                String nombreProductoAEliminarPostre = JOptionPane.showInputDialog("Ingrese el nombre del producto que desea eliminar:");
+                menuPostre.borrarProducto(nombreProductoAEliminarPostre);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Tipo de producto no válido.");
+                mostrarMenu();
+
+                break;
+        }
+
     }
 
     // Método para cambaiar datos de los productos.
