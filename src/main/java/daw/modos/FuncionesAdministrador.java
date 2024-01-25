@@ -154,8 +154,29 @@ public class FuncionesAdministrador {
 
     // Método para cambaiar datos de los productos.
     public void cambiarDatosProductos() {
-        // Por Hacer.
-        System.out.println("cambiarDatosProductos");
+        // Preguntar al usuario qué tipo de producto desea editar
+        String tipoProducto = JOptionPane.showInputDialog("¿Qué tipo de producto desea editar? (Bebida, Comida o Postre)").toLowerCase();
+
+        // Llamar al método correspondiente según la elección del usuario
+        switch (tipoProducto) {
+            case "bebida":
+                String nombreProductoAEditarBebida = JOptionPane.showInputDialog("Ingrese el nombre del producto que desea editar:");
+                menuBebida.editarProducto(nombreProductoAEditarBebida);
+                break;
+            case "comida":
+                String nombreProductoAEditarComida = JOptionPane.showInputDialog("Ingrese el nombre del producto que desea editar:");
+                menuComida.editarProducto(nombreProductoAEditarComida);
+                break;
+            case "postre":
+                String nombreProductoAEditarPostre = JOptionPane.showInputDialog("Ingrese el nombre del producto que desea editar:");
+                menuPostre.editarProducto(nombreProductoAEditarPostre);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Tipo de producto no válido.");
+                mostrarMenu();
+
+                break;
+        }
     }
 
 }
