@@ -3,6 +3,8 @@ package daw;
 import daw.tpv.FuncionesTPV;
 import daw.tpv.ObjetosTPV;
 import daw.productos.MenuComida;
+import daw.productos.MenuBebida;
+import daw.productos.MenuPostre;
 
 /**
  *
@@ -17,9 +19,15 @@ public class Main {
 
         // Iniciar el TPV.
         funcionesTPV.encenderTPV();
-        
+
         MenuComida menuComida = null;
         menuComida.llamarInicializarComidas();
+
+        MenuBebida menuBebida = null;
+        menuBebida.llamarInicializarBebidas();
+
+        MenuPostre menuPostre = null;
+        menuPostre.llamarInicializarPostre();
 
     }
 }
