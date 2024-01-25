@@ -373,4 +373,71 @@ public class MenuComida {
         JOptionPane.showMessageDialog(null, "No se encontró ningún producto con el nombre proporcionado.");
     }
 
+    // Método para editar producto de comidas.
+    public void editarProducto(String nombreProducto) {
+        // Buscar el producto en la lista basándose en el nombre proporcionado
+        for (Producto producto : comidas) {
+            if (producto.getNombre().equalsIgnoreCase(nombreProducto)) {
+                // Solicitar al usuario que elija qué atributo desea editar
+                String[] opciones = {"Nombre", "Precio", "En Stock", "Descripción", "IVA", "Subcategoría"};
+                String eleccion = (String) JOptionPane.showInputDialog(
+                        null,
+                        "Selecciona el atributo que deseas editar:",
+                        "Editar Producto",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        opciones,
+                        opciones[0]
+                );
+
+                // Actualizar el atributo seleccionado según la elección del usuario
+                if (eleccion != null) {
+                    switch (eleccion) {
+                        case "Nombre":
+                            producto.setNombre(JOptionPane.showInputDialog("Ingrese el nuevo nombre del producto:"));
+                            break;
+                        case "Precio":
+                            producto.setPrecio(obtenerPrecioValido());
+                            break;
+                        case "En Stock":
+                            producto.setEnStock(obtenerStockValido());
+                            break;
+                        case "Descripción":
+                            producto.setDescripcion(JOptionPane.showInputDialog("Ingrese la nueva descripción del producto:"));
+                            break;
+                        case "IVA":
+                            producto.setIva(obtenerIVAValido());
+                            break;
+                        case "Subcategoría":
+                            producto.setSubcategoria(obtenerSubcategoriaValida());
+                            break;
+                    }
+
+                    JOptionPane.showMessageDialog(null, "Producto editado correctamente.");
+                }
+
+                return;
+            }
+        }
+
+        // Si no se encuentra el producto con el nombre proporcionado:
+        JOptionPane.showMessageDialog(null, "No se encontró ningún producto con el nombre proporcionado.");
+    }
+
+    // Método para obtener un valor booleano válido para el stock.
+    private boolean obtenerStockValido() {
+        String[] opciones = {"Sí", "No"};
+        int eleccion = JOptionPane.showOptionDialog(
+                null,
+                "Selecciona el estado de stock:",
+                "Stock",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+        );
+
+        return eleccion == 0;  // Devuelve true si se selecciona "Sí", false si se selecciona "No"
+    }
 }
