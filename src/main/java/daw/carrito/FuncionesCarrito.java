@@ -6,6 +6,8 @@ import daw.tpv.FuncionesTPV;
 import daw.tpv.ObjetosTPV;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,13 +123,22 @@ public class FuncionesCarrito {
                         AtributosTarjeta tarjeta = obtenerTarjetaPorNumero(numeroTarjeta);
 
                         if (tarjeta != null) {
-
+                        
+                            LocalDate fechaCaducidad = null;
+                        
                             // Si la tarjeta existe, solicitar la fecha de caducidad y el CVV
-                            String fechaCaducidad = JOptionPane.showInputDialog("Ingrese la fecha de caducidad (YY/MM):");
+                            try {
+                                String fechaCaducidadA = JOptionPane.showInputDialog("Ingrese la fecha de caducidad (YYYY/MM/DD):");
+                                fechaCaducidad = LocalDate.parse(fechaCaducidadA, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+                            } catch (DateTimeParseException e) {
+                                System.out.println();
+                            }
+
+                            //LocalDate fechaCaducidad = JOptionPane.showInputDialog("Ingrese la fecha de caducidad (YYYY/MM/DD):");
                             String cvv = JOptionPane.showInputDialog("Ingrese el CVV:");
 
                             // Verificar que la fecha de caducidad y el CVV no sean nulos o vacíos
-                            if (fechaCaducidad != null && cvv != null && !fechaCaducidad.isEmpty() && !cvv.isEmpty()) {
+                            if (fechaCaducidad != null && cvv != null && !cvv.isEmpty()) {
                                 // Verificar la fecha de caducidad y el CVV
                                 if (verificarFechaYCVV(tarjeta, fechaCaducidad, cvv)) {
                                     // Calcular el precio total con IVA
@@ -221,12 +232,10 @@ public class FuncionesCarrito {
     }
 
     // Método para verificar la fecha de caducidad y el CVV
-    private static boolean verificarFechaYCVV(AtributosTarjeta tarjeta, String fechaCaducidad, String cvv) {
-        // Obtener la fecha actual
-        LocalDate fechaActual = LocalDate.now();
+    private static boolean verificarFechaYCVV(AtributosTarjeta tarjeta, LocalDate fechaCaducidad, String cvv) {
 
         // Verificar la fecha de caducidad
-        if (tarjeta.getFechaVencimiento().isAfter(fechaActual) && fechaCaducidad.length() == 5) {
+        if (tarjeta.getFechaVencimiento().equals(fechaCaducidad)) {
             // Verificar el CVV
             return tarjeta.getCvv() == Integer.parseInt(cvv);
         }
