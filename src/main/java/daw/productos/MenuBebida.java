@@ -50,9 +50,9 @@ public class MenuBebida {
         bebidas.add(new Producto("R01", "CocaCola", 1.99, true, "CocaCola", "Bebida", 0.21, "Refresco"));
         bebidas.add(new Producto("R02", "Fanta", 1.99, true, "Fanta", "Bebida", 0.21, "Refresco"));
         bebidas.add(new Producto("R03", "Aquarius", 1.99, true, "Aquarius", "Bebida", 0.21, "Refresco"));
-        bebidas.add(new Producto("AG01", "Agua Natural", 0.99, true, "Agua Natural", "Bebida", 0.10, "Agua"));
-        bebidas.add(new Producto("AG02", "Agua con Gas", 0.99, true, "Agua con Gas", "Bebida", 0.10, "Agua"));
-        bebidas.add(new Producto("AG03", "Agua Fria", 0.99, true, "Agua Fría", "Bebida", 0.10, "Agua"));
+        bebidas.add(new Producto("W01", "Agua Natural", 0.99, true, "Agua Natural", "Bebida", 0.10, "Agua"));
+        bebidas.add(new Producto("W02", "Agua con Gas", 0.99, true, "Agua con Gas", "Bebida", 0.10, "Agua"));
+        bebidas.add(new Producto("W03", "Agua Fria", 0.99, true, "Agua Fría", "Bebida", 0.10, "Agua"));
     }
 
     // Método principal que muestra el menú de selección para el usuario.
@@ -265,13 +265,20 @@ public class MenuBebida {
     public void añadirProductoABebidas() {
 
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre del nuevo producto:");
+
+        // Validar si ya existe un producto con el mismo nombre.
+        if (nombreProductoExistente(nombre)) {
+            JOptionPane.showMessageDialog(null, "Ya existe un producto con el nombre proporcionado.");
+            return;
+        }
+
         double precio = obtenerPrecioValido();
         boolean enStock = true;
         String descripcion = JOptionPane.showInputDialog("Ingrese la descripción del nuevo producto:");
         String categoria = "Comida";
         double iva = obtenerIVAValido();
         String subcategoria = obtenerSubcategoriaValida();
-        String id = obtenerNuevoID();
+        String id = obtenerNuevoID(subcategoria);
 
         Producto nuevoProducto = new Producto(id, nombre, precio, enStock, descripcion, categoria, iva, subcategoria);
         bebidas.add(nuevoProducto);
@@ -279,6 +286,16 @@ public class MenuBebida {
         // Mostrar mensaje de éxito
         JOptionPane.showMessageDialog(null, "Producto añadido correctamente a la lista de bebidas.");
 
+    }
+
+    // Método para verificar si ya existe un producto con el mismo nombre.
+    private boolean nombreProductoExistente(String nombre) {
+        for (Producto producto : bebidas) {
+            if (producto.getNombre().equalsIgnoreCase(nombre)) {
+                return true; // Ya existe un producto con el mismo nombre.
+            }
+        }
+        return false; // No hay ningún producto con el mismo nombre.
     }
 
     // Método para obtener un precio válido (mayor o igual a 0)
@@ -333,24 +350,49 @@ public class MenuBebida {
         return subcategoria;
     }
 
-    // Método para obtener un ID.
-    private String obtenerNuevoID() {
+// Método para obtener un ID basado en la subcategoría.
+    private String obtenerNuevoID(String subcategoria) {
         String nuevoID;
-        while (true) {
-            nuevoID = JOptionPane.showInputDialog("Ingrese el nuevo ID (EJ: (Alcoholica: A01 // Refresco: R01 // Agua: AG01)):");
+        char subcategoriaLetra;
 
-            boolean idExiste = false;
-            for (Producto producto : bebidas) {
-                if (producto.getId().equalsIgnoreCase(nuevoID)) {
-                    idExiste = true;
-                    break;
-                }
-            }
-
-            if (!idExiste) {
+        // Determine the prefix based on the subcategoría
+        switch (subcategoria.toLowerCase()) {
+            case "alcoholica":
+                subcategoriaLetra = 'A';
                 break;
+            case "refresco":
+                subcategoriaLetra = 'R';
+                break;
+            case "agua":
+                subcategoriaLetra = 'W';
+                break;
+            default:
+                throw new IllegalArgumentException("Subcategoría no válida");
+        }
+
+        while (true) {
+            nuevoID = JOptionPane.showInputDialog("Ingrese el nuevo ID (EJ: " + subcategoria + ": " + subcategoriaLetra + "01):");
+
+            if (nuevoID.length() == 3
+                    && nuevoID.charAt(0) == subcategoriaLetra
+                    && Character.isDigit(nuevoID.charAt(1))
+                    && Character.isDigit(nuevoID.charAt(2))) {
+
+                boolean idExiste = false;
+                for (Producto producto : bebidas) {
+                    if (producto.getId().equalsIgnoreCase(nuevoID)) {
+                        idExiste = true;
+                        break;
+                    }
+                }
+
+                if (!idExiste) {
+                    break;
+                } else {
+                    JOptionPane.showMessageDialog(null, "El ID ingresado ya existe.");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "El ID ingresado ya existe.");
+                JOptionPane.showMessageDialog(null, "El formato del ID es incorrecto. Debe ser " + subcategoriaLetra + " seguido por dos dígitos (EJ: " + subcategoriaLetra + "01).");
             }
         }
         return nuevoID;
@@ -378,6 +420,9 @@ public class MenuBebida {
         // Buscar el producto en la lista basándose en el nombre proporcionado
         for (Producto producto : bebidas) {
             if (producto.getNombre().equalsIgnoreCase(nombreProducto)) {
+                // Obtener el nombre actual del producto antes de realizar la edición
+                String nombreActual = producto.getNombre();
+
                 // Solicitar al usuario que elija qué atributo desea editar
                 String[] opciones = {"Nombre", "Precio", "En Stock", "Descripción", "IVA", "Subcategoría"};
                 String eleccion = (String) JOptionPane.showInputDialog(
@@ -394,7 +439,15 @@ public class MenuBebida {
                 if (eleccion != null) {
                     switch (eleccion) {
                         case "Nombre":
-                            producto.setNombre(JOptionPane.showInputDialog("Ingrese el nuevo nombre del producto:"));
+                            String nuevoNombre = JOptionPane.showInputDialog("Ingrese el nuevo nombre del producto:");
+
+                            // Validar si ya existe un producto con el mismo nombre
+                            if (nombreProductoExistente(nuevoNombre)) {
+                                JOptionPane.showMessageDialog(null, "Ya existe un producto con el nombre proporcionado.");
+                                return;
+                            }
+
+                            producto.setNombre(nuevoNombre);
                             break;
                         case "Precio":
                             producto.setPrecio(obtenerPrecioValido());
@@ -429,7 +482,7 @@ public class MenuBebida {
         String[] opciones = {"Sí", "No"};
         int eleccion = JOptionPane.showOptionDialog(
                 null,
-                "Selecciona el estado de stock:",
+                "¿Está este producto en Stock?",
                 "Stock",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
