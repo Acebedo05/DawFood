@@ -134,30 +134,11 @@ public class FuncionesTPV {
             - 1 Carácter especial.
      */
     private boolean validarPasswordAdmin(String password) {
-        // Validar que la contraseña cumpla con los requisitos.
-        boolean tieneMinuscula = false;
-        boolean tieneMayuscula = false;
-        boolean tieneNumero = false;
-        boolean tieneCaracterEspecial = false;
+        // Obtener la contraseña generada aleatoriamente
+        String passwordGenerada = atributosTPV.getPasswordAdmin();
 
-        for (char caracter : password.toCharArray()) {
-            // Si hay una letra minúscula, se pone true.
-            if (Character.isLowerCase(caracter)) {
-                tieneMinuscula = true;
-                // Si hay una letra mayúscula, se pone true.
-            } else if (Character.isUpperCase(caracter)) {
-                tieneMayuscula = true;
-                // Si hay un número, se pone true.
-            } else if (Character.isDigit(caracter)) {
-                tieneNumero = true;
-                // Si hay un caracter especial, se pone true.
-            } else if ("#$%&()*+,-.:;<=>@".indexOf(caracter) != -1) {
-                tieneCaracterEspecial = true;
-            }
-        }
-
-        // Si algino de los valores es false, no funciona.
-        return tieneMinuscula && tieneMayuscula && tieneNumero && tieneCaracterEspecial;
+        // Validar que la contraseña ingresada sea la misma que la generada
+        return password.equals(passwordGenerada);
     }
 
     // Método para generar una contraseña aleatoria.
