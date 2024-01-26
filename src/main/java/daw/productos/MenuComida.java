@@ -265,13 +265,20 @@ public class MenuComida {
     public void añadirProductoAComidas() {
 
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre del nuevo producto:");
+
+        // Validar si ya existe un producto con el mismo nombre.
+        if (nombreProductoExistente(nombre)) {
+            JOptionPane.showMessageDialog(null, "Ya existe un producto con el nombre proporcionado.");
+            return;
+        }
+
         double precio = obtenerPrecioValido();
         boolean enStock = true;
         String descripcion = JOptionPane.showInputDialog("Ingrese la descripción del nuevo producto:");
         String categoria = "Comida";
         double iva = obtenerIVAValido();
         String subcategoria = obtenerSubcategoriaValida();
-        String id = obtenerNuevoID();
+        String id = obtenerNuevoID(subcategoria);
 
         Producto nuevoProducto = new Producto(id, nombre, precio, enStock, descripcion, categoria, iva, subcategoria);
         comidas.add(nuevoProducto);
@@ -279,6 +286,16 @@ public class MenuComida {
         // Mostrar mensaje de éxito
         JOptionPane.showMessageDialog(null, "Producto añadido correctamente a la lista de comidas.");
 
+    }
+
+    // Método para verificar si ya existe un producto con el mismo nombre.
+    private boolean nombreProductoExistente(String nombre) {
+        for (Producto producto : comidas) {
+            if (producto.getNombre().equalsIgnoreCase(nombre)) {
+                return true; // Ya existe un producto con el mismo nombre.
+            }
+        }
+        return false; // No hay ningún producto con el mismo nombre.
     }
 
     // Método para obtener un precio válido (mayor o igual a 0)
@@ -333,24 +350,49 @@ public class MenuComida {
         return subcategoria;
     }
 
-    // Método para obtener un ID.
-    private String obtenerNuevoID() {
+    // Método para obtener un ID basado en la subcategoría.
+    private String obtenerNuevoID(String subcategoria) {
         String nuevoID;
-        while (true) {
-            nuevoID = JOptionPane.showInputDialog("Ingrese el nuevo ID (EJ: (Pizza: P01 // Hamburguesa: H01 // Kebab: K01)):");
+        char subcategoriaLetra;
 
-            boolean idExiste = false;
-            for (Producto producto : comidas) {
-                if (producto.getId().equalsIgnoreCase(nuevoID)) {
-                    idExiste = true;
-                    break;
-                }
-            }
-
-            if (!idExiste) {
+        // Determine the prefix based on the subcategoría
+        switch (subcategoria.toLowerCase()) {
+            case "pizza":
+                subcategoriaLetra = 'P';
                 break;
+            case "hamburguesa":
+                subcategoriaLetra = 'H';
+                break;
+            case "kebab":
+                subcategoriaLetra = 'K';
+                break;
+            default:
+                throw new IllegalArgumentException("Subcategoría no válida");
+        }
+
+        while (true) {
+            nuevoID = JOptionPane.showInputDialog("Ingrese el nuevo ID (EJ: " + subcategoria + ": " + subcategoriaLetra + "01):");
+
+            if (nuevoID.length() == 3
+                    && nuevoID.charAt(0) == subcategoriaLetra
+                    && Character.isDigit(nuevoID.charAt(1))
+                    && Character.isDigit(nuevoID.charAt(2))) {
+
+                boolean idExiste = false;
+                for (Producto producto : comidas) {
+                    if (producto.getId().equalsIgnoreCase(nuevoID)) {
+                        idExiste = true;
+                        break;
+                    }
+                }
+
+                if (!idExiste) {
+                    break;
+                } else {
+                    JOptionPane.showMessageDialog(null, "El ID ingresado ya existe.");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "El ID ingresado ya existe.");
+                JOptionPane.showMessageDialog(null, "El formato del ID es incorrecto. Debe ser " + subcategoriaLetra + " seguido por dos dígitos (EJ: " + subcategoriaLetra + "01).");
             }
         }
         return nuevoID;
@@ -378,6 +420,9 @@ public class MenuComida {
         // Buscar el producto en la lista basándose en el nombre proporcionado
         for (Producto producto : comidas) {
             if (producto.getNombre().equalsIgnoreCase(nombreProducto)) {
+                // Obtener el nombre actual del producto antes de realizar la edición
+                String nombreActual = producto.getNombre();
+
                 // Solicitar al usuario que elija qué atributo desea editar
                 String[] opciones = {"Nombre", "Precio", "En Stock", "Descripción", "IVA", "Subcategoría"};
                 String eleccion = (String) JOptionPane.showInputDialog(
@@ -394,7 +439,15 @@ public class MenuComida {
                 if (eleccion != null) {
                     switch (eleccion) {
                         case "Nombre":
-                            producto.setNombre(JOptionPane.showInputDialog("Ingrese el nuevo nombre del producto:"));
+                            String nuevoNombre = JOptionPane.showInputDialog("Ingrese el nuevo nombre del producto:");
+
+                            // Validar si ya existe un producto con el mismo nombre
+                            if (nombreProductoExistente(nuevoNombre)) {
+                                JOptionPane.showMessageDialog(null, "Ya existe un producto con el nombre proporcionado.");
+                                return;
+                            }
+
+                            producto.setNombre(nuevoNombre);
                             break;
                         case "Precio":
                             producto.setPrecio(obtenerPrecioValido());
@@ -429,7 +482,7 @@ public class MenuComida {
         String[] opciones = {"Sí", "No"};
         int eleccion = JOptionPane.showOptionDialog(
                 null,
-                "Selecciona el estado de stock:",
+                "¿Está este producto en Stock?",
                 "Stock",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
