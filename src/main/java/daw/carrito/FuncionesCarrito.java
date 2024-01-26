@@ -131,7 +131,7 @@ public class FuncionesCarrito {
                                 String fechaCaducidadA = JOptionPane.showInputDialog("Ingrese la fecha de caducidad (YYYY/MM/DD):");
                                 fechaCaducidad = LocalDate.parse(fechaCaducidadA, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
                             } catch (DateTimeParseException e) {
-                                System.out.println();
+
                             }
 
                             //LocalDate fechaCaducidad = JOptionPane.showInputDialog("Ingrese la fecha de caducidad (YYYY/MM/DD):");
