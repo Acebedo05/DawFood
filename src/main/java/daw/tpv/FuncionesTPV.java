@@ -1,22 +1,25 @@
 package daw.tpv;
 
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import java.util.Random;
-import javax.swing.JDialog;
+// Importar las clases necesarias desde otros paquetes.
 import daw.modos.FuncionesAdministrador;
 import daw.productos.MenuComida;
 import daw.productos.MenuBebida;
 import daw.productos.MenuPostre;
 
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.util.Random;
+import javax.swing.JDialog;
+
 /**
+ * Clase define las funciones del TPV.
  *
  * @author acebedo
  */
 public class FuncionesTPV {
 
-    private AtributosTPV atributosTPV;
+    private AtributosTPV atributosTPV; // Atributo que almacena los atributos del TPV.
 
     // Constructor de la clase FuncionesTPV.
     public FuncionesTPV(AtributosTPV atributosTPV) {
@@ -25,7 +28,7 @@ public class FuncionesTPV {
 
     // Método para encender el TPV, mostrando un mensaje de bienvenida y permitiendo seleccionar el modo.
     public void encenderTPV() {
-        // Mensaje de bienvenida.
+        // Mensaje de bienvenida con información sobre el TPV.
         String mensajeInicio = "¡Bienvenido al TPV!\n"
                 + "Ubicación del TPV: " + atributosTPV.getUbicacion() + "\n"
                 + "Número de Serie: " + atributosTPV.getNumeroSerie() + "\n"
@@ -52,12 +55,12 @@ public class FuncionesTPV {
 
         // Agregamos ActionListener para los botones.
         botonUsuario.addActionListener(e -> {
-            iniciarModoUsuario();
+            iniciarModoUsuario(); // Llama al método que inicia el modo usuario.
             dialog.dispose();  // Cierra la ventana después de elegir Modo Usuario.
         });
 
         botonAdmin.addActionListener(e -> {
-            iniciarModoAdmin();
+            iniciarModoAdmin(); // Llama al método que inicia el modo administrador.
             dialog.dispose();  // Cierra la ventana después de elegir Modo Administrador.
         });
 
@@ -72,13 +75,9 @@ public class FuncionesTPV {
 
 // Método para iniciar el modo de usuario.
     public void iniciarModoUsuario() {
-        // Crear una instancia de la clase MenuComida.
+        // Crear instancias de las clases MenuComida, MenuBebida y MenuPostre.
         MenuComida menuComida = new MenuComida(this);
-
-        // Crear una instancia de la clase MenuBebida.
         MenuBebida menuBebida = new MenuBebida(this);
-
-        // Crear una instancia de la clase MenuPostre.
         MenuPostre menuPostre = new MenuPostre(this);
 
         // Pasar la instancia de MenuComida al constructor de FuncionesUsuario.
@@ -90,11 +89,12 @@ public class FuncionesTPV {
 
     // Método para iniciar el modo de administrador, generando o solicitando la contraseña de administrador.
     public void iniciarModoAdmin() {
-        String password;
-        int intentosMaximos = 3;
-        int intentos = 0;
+        String password; // Variable para almacenar la contraseña ingresada por el usuario.
+        int intentosMaximos = 3; // Número máximo de intentos permitidos para ingresar la contraseña.
+        int intentos = 0; // Contador de intentos.
 
         do {
+            // Verifica si la contraseña de administrador aún no se ha generado o está vacía.
             if (atributosTPV.getPasswordAdmin() == null || atributosTPV.getPasswordAdmin().isEmpty()) {
                 // Si la contraseña de administrador aún no se ha generado, se crea una nueva.
                 password = generarPasswordAleatoria();
@@ -106,6 +106,7 @@ public class FuncionesTPV {
                 password = JOptionPane.showInputDialog(null, "Ingrese la contraseña de administrador:");
             }
 
+            // Verifica si la contraseña ingresada es válida.
             if (password != null && validarPasswordAdmin(password)) {
                 // Crear instancia de FuncionesAdministrador.
                 FuncionesAdministrador funcionesAdmin = new FuncionesAdministrador(atributosTPV);
@@ -118,6 +119,7 @@ public class FuncionesTPV {
             }
         } while (intentos < intentosMaximos);
 
+        // Si se alcanza el número máximo de intentos, muestra un mensaje y vuelve a encender el TPV.
         if (intentos == intentosMaximos) {
             JOptionPane.showMessageDialog(null, "Número máximo de intentos alcanzado. No se puede acceder al modo administrador.");
             encenderTPV();
@@ -134,18 +136,18 @@ public class FuncionesTPV {
             - 1 Carácter especial.
      */
     private boolean validarPasswordAdmin(String password) {
-        // Obtener la contraseña generada aleatoriamente
+        // Obtener la contraseña generada aleatoriamente.
         String passwordGenerada = atributosTPV.getPasswordAdmin();
 
-        // Validar que la contraseña ingresada sea la misma que la generada
+        // Validar que la contraseña ingresada sea la misma que la generada.
         return password.equals(passwordGenerada);
     }
 
     // Método para generar una contraseña aleatoria.
     private String generarPasswordAleatoria() {
         // Genera una contraseña aleatoria con los requisitos especificados.
-        Random random = new Random();
-        String password = "";
+        Random random = new Random(); // Crea una instancia de la clase Random para generar números aleatorios.
+        String password = ""; // Variable para almacenar la contraseña generada.
 
         // Caracteres permitidos
         char[] letrasMinusculas = "abcdefghijklmnopqrstuvwxyz".toCharArray();
@@ -165,7 +167,7 @@ public class FuncionesTPV {
             password += caracteresEspeciales[randomIndex];
         }
 
-        return password;
+        return password; // Devuelve la contraseña generada.
     }
 
 }

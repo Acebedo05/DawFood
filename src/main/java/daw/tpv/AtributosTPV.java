@@ -1,22 +1,23 @@
 package daw.tpv;
 
+// Importar las clases necesarias desde otros paquetes.
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
 /**
- *
+ * Clase con los atributos de un TPV.
  * @author acebedo
  */
 public class AtributosTPV {
 
-    // Atributos
+    // Atributos.
     private String ubicacion;
     private Date fechaHoraActual;
     private UUID numeroSerie;
     private String passwordAdmin;
 
-    // Costructor
+    // Costructor.
     public AtributosTPV(String ubicacion, String passwordAdmin) {
         this.ubicacion = ubicacion;
         this.fechaHoraActual = new Date();
@@ -24,13 +25,13 @@ public class AtributosTPV {
         this.passwordAdmin = passwordAdmin;
     }
 
-    // Costructor vacío
+    // Costructor vacío.
     public AtributosTPV() {
         this.fechaHoraActual = new Date();
         this.numeroSerie = UUID.randomUUID();
     }
 
-    // Getters y Setters
+    // Getters y Setters.
     public String getUbicacion() {
         return ubicacion;
     }
@@ -63,7 +64,7 @@ public class AtributosTPV {
         this.passwordAdmin = passwordAdmin;
     }
 
-    // hashCode
+    // hashCode.
     @Override
     public int hashCode() {
         int hash = 5;
@@ -74,7 +75,7 @@ public class AtributosTPV {
         return hash;
     }
 
-    // equals
+    // equals.
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -99,7 +100,7 @@ public class AtributosTPV {
         return Objects.equals(this.numeroSerie, other.numeroSerie);
     }
 
-    // toString
+    // toString.
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

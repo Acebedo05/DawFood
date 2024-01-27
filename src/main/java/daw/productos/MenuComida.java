@@ -1,8 +1,10 @@
 package daw.productos;
 
+// Importar las clases necesarias desde otros paquetes.
 import daw.carrito.FuncionesCarrito;
 import daw.modos.FuncionesUsuario;
 import daw.tpv.FuncionesTPV;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -13,17 +15,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- *
+ * Clase que representa el menú de comidas en el TPV.
  * @author acebedo
  */
 public class MenuComida {
 
+    // Atributos necesarios para las funciones del menú de comidas.
     private FuncionesTPV funcionesTPV;
     private FuncionesCarrito funcionesCarrito;
     private FuncionesUsuario funcionesUsuario;
 
+    // Constructor que recibe la referencia a FuncionesTPV y crea una instancia de FuncionesCarrito.
     public MenuComida(FuncionesTPV funcionesTPV) {
-        // Almacena la referencia a FuncionesTPV.
         this.funcionesTPV = funcionesTPV;
         this.funcionesCarrito = new FuncionesCarrito(this.funcionesUsuario);
     }
@@ -31,28 +34,29 @@ public class MenuComida {
     // Listas para almacenar las diferentes categorías de comidas.
     private static List<Producto> comidas = new ArrayList<>();
 
-    // Constructor de la clase, se inicializan las listas y se llama al método principal.
+    // Método principal del menú de comidas, inicializa las comidas y muestra el menú de selección de comidas.
     public void MenuComida() {
         // Mostrar el menú principal de comidas.
         menuSeleccionComidas();
     }
 
+     // Método estático para inicializar la lista de comidas.
     public static void llamarInicializarComidas() {
         // Inicializar las listas.
         inicializarComidas();
     }
 
-    // Inicializar la lista de pizzas con datos.
+    // Método estático para inicializar la lista de comidas con datos.
     private static void inicializarComidas() {
-        comidas.add(new Producto("P01", "Pizza 4 Quesos", 8.99, true, "Pizza con cuatro tipos de quesos", "Comida", 0.10, "Pizza"));
-        comidas.add(new Producto("P02", "Pizza Margarita", 9.99, true, "Pizza con queso y tomate", "Comida", 0.10, "Pizza"));
-        comidas.add(new Producto("P03", "Pizza Boloñesa", 10.99, true, "Pizza con salsa boloñesa", "Comida", 0.10, "Pizza"));
-        comidas.add(new Producto("H01", "Hamburguesa Ternera", 7.99, true, "Hamburguesa de ternera", "Comida", 0.10, "Hamburguesa"));
-        comidas.add(new Producto("H02", "Hamburguesa Pollo", 6.99, true, "Hamburguesa de pollo", "Comida", 0.10, "Hamburguesa"));
-        comidas.add(new Producto("H03", "Hamburguesa Vegetal", 5.99, true, "Hamburguesa vegetariana", "Comida", 0.10, "Hamburguesa"));
-        comidas.add(new Producto("K01", "Kebab Ternera", 9.99, true, "Kebab de ternera", "Comida", 0.10, "Kebab"));
-        comidas.add(new Producto("K02", "Kebab Pollo", 8.99, true, "Kebab de pollo", "Comida", 0.10, "Kebab"));
-        comidas.add(new Producto("K03", "Kebab Mixto", 10.99, true, "Kebab mixto", "Comida", 0.10, "Kebab"));
+        comidas.add(new Producto("P01", "Pizza 4 Quesos", 8.00, true, "Pizza con cuatro tipos de quesos", "Comida", 0.10, "Pizza"));
+        comidas.add(new Producto("P02", "Pizza Margarita", 9.00, true, "Pizza con queso y tomate", "Comida", 0.10, "Pizza"));
+        comidas.add(new Producto("P03", "Pizza Boloñesa", 10.00, true, "Pizza con salsa boloñesa", "Comida", 0.10, "Pizza"));
+        comidas.add(new Producto("H01", "Hamburguesa Ternera", 7.00, true, "Hamburguesa de ternera", "Comida", 0.10, "Hamburguesa"));
+        comidas.add(new Producto("H02", "Hamburguesa Pollo", 6.00, true, "Hamburguesa de pollo", "Comida", 0.10, "Hamburguesa"));
+        comidas.add(new Producto("H03", "Hamburguesa Vegetal", 5.00, true, "Hamburguesa vegetariana", "Comida", 0.10, "Hamburguesa"));
+        comidas.add(new Producto("K01", "Kebab Ternera", 4.00, true, "Kebab de ternera", "Comida", 0.10, "Kebab"));
+        comidas.add(new Producto("K02", "Kebab Pollo", 4.00, true, "Kebab de pollo", "Comida", 0.10, "Kebab"));
+        comidas.add(new Producto("K03", "Kebab Mixto", 5.00, true, "Kebab mixto", "Comida", 0.10, "Kebab"));
     }
 
     // Método principal que muestra el menú de selección para el usuario.
@@ -85,6 +89,7 @@ public class MenuComida {
             funcionesCarrito.mostrarMenuCarritoConPrecios();
         });
 
+        // Configurar la ventana.
         frame.add(panel);
         frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -129,6 +134,7 @@ public class MenuComida {
         });
         agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
+        // Configurar la ventana.
         frame.add(panel);
         frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -163,6 +169,7 @@ public class MenuComida {
         });
         agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
+        // Configurar la ventana.
         frame.add(panel);
         frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -197,6 +204,7 @@ public class MenuComida {
         });
         agregarBoton(panel, "Ver carrito", e -> funcionesCarrito.mostrarMenuCarritoConPrecios());
 
+        // Configurar la ventana.
         frame.add(panel);
         frame.setSize(400, 160);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -264,33 +272,51 @@ public class MenuComida {
     // Metodo para añadir nuevo producto a comidas.
     public void añadirProductoAComidas() {
 
+        // Solicitar al usuario que ingrese el nombre del nuevo producto.
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre del nuevo producto:");
 
         // Validar si ya existe un producto con el mismo nombre.
         if (nombreProductoExistente(nombre)) {
+            // Mostrar mensaje de error y salir del método si ya existe un producto con el mismo nombre.
             JOptionPane.showMessageDialog(null, "Ya existe un producto con el nombre proporcionado.");
             return;
         }
 
+        // Obtener un precio válido para el nuevo producto.
         double precio = obtenerPrecioValido();
+        
+        // Establecer que el nuevo producto está en stock por defecto.
         boolean enStock = true;
+        
+        // Solicitar al usuario que ingrese la descripción del nuevo producto.
         String descripcion = JOptionPane.showInputDialog("Ingrese la descripción del nuevo producto:");
+        
+        // Establecer la categoría del nuevo producto como "Comida".
         String categoria = "Comida";
+        
+        // Obtener un porcentaje de IVA válido para el nuevo producto.
         double iva = obtenerIVAValido();
+        
+        // Obtener una subcategoría válida para el nuevo producto.
         String subcategoria = obtenerSubcategoriaValida();
+        
+        // Obtener un nuevo ID basado en la subcategoría del nuevo producto.
         String id = obtenerNuevoID(subcategoria);
 
+        // Crear un nuevo objeto Producto con los datos ingresados y agregarlo a la lista de comidas.
         Producto nuevoProducto = new Producto(id, nombre, precio, enStock, descripcion, categoria, iva, subcategoria);
         comidas.add(nuevoProducto);
 
-        // Mostrar mensaje de éxito
+        // Mostrar mensaje de que se ha añadido correctamente.
         JOptionPane.showMessageDialog(null, "Producto añadido correctamente a la lista de comidas.");
 
     }
 
     // Método para verificar si ya existe un producto con el mismo nombre.
     private boolean nombreProductoExistente(String nombre) {
+        // Iterar sobre la lista de bebidas para verificar si existe un producto con el mismo nombre.
         for (Producto producto : comidas) {
+            // Comparar el nombre del producto actual con el nombre proporcionado (ignorando mayúsculas y minúsculas).
             if (producto.getNombre().equalsIgnoreCase(nombre)) {
                 return true; // Ya existe un producto con el mismo nombre.
             }
@@ -301,53 +327,72 @@ public class MenuComida {
     // Método para obtener un precio válido (mayor o igual a 0)
     private double obtenerPrecioValido() {
         double precio;
+        // Solicitar al usuario un precio válido.
         while (true) {
             try {
+                // Solicitar al usuario que ingrese el precio del nuevo producto.
                 precio = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio del nuevo producto:"));
+                
+                // Validar que el precio sea mayor o igual a 0.
                 if (precio < 0) {
                     throw new NumberFormatException();
                 }
+                // Salir del ciclo si el precio ingresado es válido.
                 break;
             } catch (NumberFormatException e) {
+                // Capturar excepción si se ingresa un valor no numérico o un precio negativo.
                 JOptionPane.showMessageDialog(null, "Ingrese un precio válido igual o mayor que 0.");
             }
         }
-        return precio;
+        return precio; // Retornar el precio válido.
     }
 
     // Método para obtener un porcentaje de IVA válido (mayor o igual a 0)
     private double obtenerIVAValido() {
         double iva;
+        // Ciclo para solicitar al usuario un porcentaje de IVA válido.
         while (true) {
             try {
+                // Solicitar al usuario que ingrese el porcentaje de IVA del nuevo producto (ejemplo: '0.10').
                 iva = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el porcentaje de IVA del nuevo producto (Ej: '0.10'):"));
+                
+                // Validar que el porcentaje de IVA sea mayor o igual a 0.
                 if (iva < 0) {
                     throw new NumberFormatException();
                 }
+                
+                // Salir del ciclo si el porcentaje de IVA ingresado es válido.
                 break;
             } catch (NumberFormatException e) {
+                // Capturar excepción si se ingresa un valor no numérico o un porcentaje de IVA negativo.
                 JOptionPane.showMessageDialog(null, "Ingrese un porcentaje de IVA válido igual o mayor que 0.");
             }
         }
-        return iva;
+        return iva; // Retornar el porcentaje de IVA válido.
     }
 
     // Método para obtener una subcategoría válida ("Hamburguesas", "Pizzas" o "Kebabs")
     private String obtenerSubcategoriaValida() {
         String subcategoria;
+        // Ciclo para solicitar al usuario una subcategoría válida.
         while (true) {
+            // Solicitar al usuario que ingrese la subcategoría del nuevo producto.
             subcategoria = JOptionPane.showInputDialog("Ingrese la subcategoría del nuevo producto (Hamburguesa / Pizza / Kebab):");
 
+            // Convertir la subcategoría a minúsculas y luego a mayúsculas solo en la primera letra.
             subcategoria = subcategoria.toLowerCase();
             subcategoria = subcategoria.substring(0, 1).toUpperCase() + subcategoria.substring(1);
 
+            // Verificar si la subcategoría ingresada es válida (Hamburguesa, Pizza o Kebab).
             if ("Hamburguesa".equals(subcategoria) || "Pizza".equals(subcategoria) || "Kebab".equals(subcategoria)) {
+                // Salir del ciclo si la subcategoría ingresada es válida.
                 break;
             } else {
+                // Mostrar mensaje de error y solicitar nuevamente la subcategoría si no es válida.
                 JOptionPane.showMessageDialog(null, "Ingrese una subcategoría válida (Hamburguesa / Pizza / Kebab).");
             }
         }
-        return subcategoria;
+        return subcategoria; // Retornar la subcategoría válida.
     }
 
     // Método para obtener un ID basado en la subcategoría.
@@ -355,7 +400,7 @@ public class MenuComida {
         String nuevoID;
         char subcategoriaLetra;
 
-        // Determine the prefix based on the subcategoría
+        // Determinar la primera letra en función de la subcategoria.
         switch (subcategoria.toLowerCase()) {
             case "pizza":
                 subcategoriaLetra = 'P';
@@ -370,14 +415,17 @@ public class MenuComida {
                 throw new IllegalArgumentException("Subcategoría no válida");
         }
 
+        // Bucle para garantizar la obtención de un ID único.
         while (true) {
             nuevoID = JOptionPane.showInputDialog("Ingrese el nuevo ID (EJ: " + subcategoria + ": " + subcategoriaLetra + "01):");
 
+            // Verificar el formato del ID ingresado.
             if (nuevoID.length() == 3
                     && nuevoID.charAt(0) == subcategoriaLetra
                     && Character.isDigit(nuevoID.charAt(1))
                     && Character.isDigit(nuevoID.charAt(2))) {
 
+                // Verificar si el ID ya existe en la lista.
                 boolean idExiste = false;
                 for (Producto producto : comidas) {
                     if (producto.getId().equalsIgnoreCase(nuevoID)) {
@@ -386,28 +434,31 @@ public class MenuComida {
                     }
                 }
 
+                // Si el ID es único, salir del bucle. De lo contrario, mostrar un mensaje de que el ID ya existe.
                 if (!idExiste) {
                     break;
                 } else {
                     JOptionPane.showMessageDialog(null, "El ID ingresado ya existe.");
                 }
             } else {
+                // Mostrar un mensaje de error si el formato del ID es incorrecto.
                 JOptionPane.showMessageDialog(null, "El formato del ID es incorrecto. Debe ser " + subcategoriaLetra + " seguido por dos dígitos (EJ: " + subcategoriaLetra + "01).");
             }
         }
-        return nuevoID;
+        return nuevoID; // Devolver el ID único obtenido.
     }
 
     // Metodo para borrar producto de comidas.
     public void borrarProducto(String nombreProducto) {
         // Iterar sobre la lista de comidas para encontrar el producto con el Nombre.
         for (Producto producto : comidas) {
+            // Comparar el nombre del producto actual con el nombre proporcionado (sin distinguir mayúsculas y minúsculas).
             if (producto.getNombre().equalsIgnoreCase(nombreProducto)) {
                 // Eliminar el producto de la lista.
                 comidas.remove(producto);
 
                 JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
-                return;
+                return; // Salir del método después de eliminar el producto.
             }
         }
 
@@ -417,13 +468,13 @@ public class MenuComida {
 
     // Método para editar producto de comidas.
     public void editarProducto(String nombreProducto) {
-        // Buscar el producto en la lista basándose en el nombre proporcionado
+        // Buscar el producto en la lista basándose en el nombre proporcionado.
         for (Producto producto : comidas) {
             if (producto.getNombre().equalsIgnoreCase(nombreProducto)) {
-                // Obtener el nombre actual del producto antes de realizar la edición
+                // Obtener el nombre actual del producto antes de realizar la edición.
                 String nombreActual = producto.getNombre();
 
-                // Solicitar al usuario que elija qué atributo desea editar
+                // Solicitar al usuario que elija qué atributo desea editar.
                 String[] opciones = {"Nombre", "Precio", "En Stock", "Descripción", "IVA", "Subcategoría"};
                 String eleccion = (String) JOptionPane.showInputDialog(
                         null,
@@ -435,13 +486,13 @@ public class MenuComida {
                         opciones[0]
                 );
 
-                // Actualizar el atributo seleccionado según la elección del usuario
+                // Actualizar el atributo seleccionado según la elección del usuario.
                 if (eleccion != null) {
                     switch (eleccion) {
                         case "Nombre":
                             String nuevoNombre = JOptionPane.showInputDialog("Ingrese el nuevo nombre del producto:");
 
-                            // Validar si ya existe un producto con el mismo nombre
+                            // Validar si ya existe un producto con el mismo nombre.
                             if (nombreProductoExistente(nuevoNombre)) {
                                 JOptionPane.showMessageDialog(null, "Ya existe un producto con el nombre proporcionado.");
                                 return;
@@ -479,7 +530,10 @@ public class MenuComida {
 
     // Método para obtener un valor booleano válido para el stock.
     private boolean obtenerStockValido() {
+        // Define las opciones para la respuesta de stock ("Sí" o "No").
         String[] opciones = {"Sí", "No"};
+        
+        // Muestra un cuadro de diálogo de opción con las opciones definidas.
         int eleccion = JOptionPane.showOptionDialog(
                 null,
                 "¿Está este producto en Stock?",

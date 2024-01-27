@@ -1,29 +1,32 @@
 package daw.modos;
 
+// Importar las clases necesarias desde otros paquetes.
 import daw.carrito.FuncionesCarrito;
 import daw.tpv.FuncionesTPV;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import daw.productos.MenuComida;
 import daw.productos.MenuBebida;
 import daw.productos.MenuPostre;
 import daw.tpv.ObjetosTPV;
 
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 /**
- *
+ * Clase que define las funciones para el usuario en el TPV.
  * @author khalid
  */
 public class FuncionesUsuario {
 
+    // Atributos necesarios para las funciones del usuario.
     private FuncionesTPV funcionesTPV;
     private FuncionesCarrito funcionesCarrito;
     private FuncionesUsuario funcionesUsuario;
 
+     // Constructor que recibe la referencia a FuncionesTPV y crea una instancia de FuncionesCarrito.
     public FuncionesUsuario(FuncionesTPV funcionesTPV) {
-        // Almacena la referencia a FuncionesTPV.
         this.funcionesTPV = funcionesTPV;
         this.funcionesCarrito = new FuncionesCarrito(this.funcionesUsuario);
     }
@@ -59,6 +62,7 @@ public class FuncionesUsuario {
             frame.dispose();
         });
 
+        // Configurar la ventana.
         frame.add(panel);
         frame.setSize(400, 130);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,6 +80,7 @@ public class FuncionesUsuario {
         panel.add(boton);
     }
 
+    // Referencias a los menús de comida, bebida y postre.
     private MenuComida menuComida;
     private MenuBebida menuBebida;
     private MenuPostre menuPostre;
@@ -109,13 +114,15 @@ public class FuncionesUsuario {
     private void noComprar(JFrame frame) {
         // Cerrar la ventana actual.
         frame.dispose();
-        // Llamando al método encenderTPV de la clase FuncionesTPV
+        // Llamando al método encenderTPV de la clase FuncionesTPV.
         FuncionesTPV funcionesTPV = ObjetosTPV.inicializarTPV();
         funcionesTPV.encenderTPV();
 
+        // Llamar al método noComprar de la clase FuncionesCarrito.
         FuncionesCarrito.noComprar();
     }
 
+    // Método para procesar el pago llamando al método correspondiente en FuncionesCarrito.
     private void procesarPago() {
         funcionesCarrito.procesarPago();
     }

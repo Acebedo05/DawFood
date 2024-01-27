@@ -1,27 +1,31 @@
 package daw.modos;
 
+// Importar las clases necesarias desde otros paquetes.
 import daw.productos.MenuComida;
 import daw.carrito.FuncionesCarrito;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import daw.tpv.AtributosTPV;
 import daw.tpv.FuncionesTPV;
 import daw.tpv.ObjetosTPV;
+import daw.productos.MenuBebida;
+import daw.productos.MenuPostre;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import daw.productos.MenuBebida;
-import daw.productos.MenuPostre;
+
 
 /**
- *
+ * Clase que define las funciones del administrador del TPV.
  * @author khalid
  */
 public class FuncionesAdministrador {
 
+    // Atributos necesarios para las funciones del administrador.
     private AtributosTPV atributosTPV;
     private FuncionesCarrito funcionesCarrito;
     private MenuComida menuComida;
@@ -29,6 +33,7 @@ public class FuncionesAdministrador {
     private MenuPostre menuPostre;
     private FuncionesTPV funcionesTPV;
 
+    // Constructor que inicializa los atributos y los menús.
     public FuncionesAdministrador(AtributosTPV atributosTPV) {
         this.atributosTPV = atributosTPV;
         this.menuComida = new MenuComida(this.funcionesTPV);
@@ -36,7 +41,7 @@ public class FuncionesAdministrador {
         this.menuPostre = new MenuPostre(this.funcionesTPV);
     }
 
-    // Método para mostrar un menú con las obciones que tiene el administrador.
+    // Método para mostrar un menú con las opciones que tiene el administrador.
     public void mostrarMenu() {
         // Crear la ventana del menú.
         JFrame frame = new JFrame("Menú Administrador");
@@ -54,6 +59,7 @@ public class FuncionesAdministrador {
         agregarBoton(panel, "Volver al Menú Inicial", e -> volverAlMenuInicial(frame));
         agregarBoton(panel, "Apagar TPV", e -> apagarTPV());
 
+        // Configurar la ventana.
         frame.add(panel);
         frame.setSize(400, 165);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,10 +108,10 @@ public class FuncionesAdministrador {
 
     // Método para añadir nuevos productos.
     public void añadirProductos() {
-        // Preguntar al usuario qué tipo de producto desea añadir
+        // Preguntar al usuario qué tipo de producto desea añadir.
         String tipoProducto = JOptionPane.showInputDialog("¿Qué tipo de producto desea añadir? (Bebida, Comida o Postre)").toLowerCase();
 
-        // Llamar al método correspondiente según la elección del usuario
+        // Llamar al método correspondiente según la elección del usuario.
         switch (tipoProducto) {
             case "bebida":
                 menuBebida.añadirProductoABebidas();
@@ -126,10 +132,10 @@ public class FuncionesAdministrador {
 
     // Método para borrar productos existentes.
     public void borrarProductos() {
-        // Preguntar al usuario qué tipo de producto desea borrar
+        // Preguntar al usuario qué tipo de producto desea borrar.
         String tipoProducto = JOptionPane.showInputDialog("¿Qué tipo de producto desea borrar? (Bebida, Comida o Postre)").toLowerCase();
 
-        // Llamar al método correspondiente según la elección del usuario
+        // Llamar al método correspondiente según la elección del usuario.
         switch (tipoProducto) {
             case "bebida":
                 String nombreProductoAEliminarBebida = JOptionPane.showInputDialog("Ingrese el nombre del producto que desea eliminar:");
@@ -146,7 +152,6 @@ public class FuncionesAdministrador {
             default:
                 JOptionPane.showMessageDialog(null, "Tipo de producto no válido.");
                 mostrarMenu();
-
                 break;
         }
 
@@ -154,10 +159,10 @@ public class FuncionesAdministrador {
 
     // Método para cambaiar datos de los productos.
     public void cambiarDatosProductos() {
-        // Preguntar al usuario qué tipo de producto desea editar
+        // Preguntar al usuario qué tipo de producto desea editar.
         String tipoProducto = JOptionPane.showInputDialog("¿Qué tipo de producto desea editar? (Bebida, Comida o Postre)").toLowerCase();
 
-        // Llamar al método correspondiente según la elección del usuario
+        // Llamar al método correspondiente según la elección del usuario.
         switch (tipoProducto) {
             case "bebida":
                 String nombreProductoAEditarBebida = JOptionPane.showInputDialog("Ingrese el nombre del producto que desea editar:");

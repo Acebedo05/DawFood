@@ -1,9 +1,10 @@
 package daw.productos;
 
+// Importar las clases necesarias desde otros paquetes.
 import java.util.Objects;
 
 /**
- *
+ * Clase con los atributos de un Producto.
  * @author acebedo
  */
 public class Producto {
@@ -91,8 +92,8 @@ public class Producto {
         this.subcategoria = subcategoria;
     }
 
+    // Metodo para calcular el precio con IVA.
     public double getPrecioConIVA() {
-        // Calcula el precio con IVA
         double precioConIVA = precio + (precio * iva);
         return precioConIVA;
     }

@@ -1,10 +1,11 @@
 package daw.carrito;
 
+// Importar las clases necesarias desde otros paquetes.
 import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- *
+ * Clase con los atributos de una tarjeta de crédito.
  * @author acebedo
  */
 public class AtributosTarjeta {
@@ -106,7 +107,7 @@ public class AtributosTarjeta {
         return Objects.equals(this.fechaVencimiento, other.fechaVencimiento);
     }
 
-    // to String.
+    // toString.
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

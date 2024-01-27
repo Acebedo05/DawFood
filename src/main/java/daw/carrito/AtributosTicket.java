@@ -1,10 +1,11 @@
 package daw.carrito;
 
+// Importar las clases necesarias desde otros paquetes.
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- *
+ * Clase con los atributos de un Ticket.
  * @author acebedo
  */
 public class AtributosTicket {
