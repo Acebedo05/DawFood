@@ -7,6 +7,7 @@ import daw.tpv.FuncionesTPV;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -338,11 +339,19 @@ public class MenuBebida {
                 if (precio < 0) {
                     throw new NumberFormatException();
                 }
+
+                // Validar que el número tenga como máximo dos decimales.
+                BigDecimal bd = new BigDecimal(precio);
+                bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+                if (bd.doubleValue() != precio) {
+                    throw new NumberFormatException();
+                }
+
                 // Salir del ciclo si el precio ingresado es válido.
                 break;
             } catch (NumberFormatException e) {
                 // Capturar excepción si se ingresa un valor no numérico o un precio negativo.
-                JOptionPane.showMessageDialog(null, "Ingrese un precio válido igual o mayor que 0.");
+                JOptionPane.showMessageDialog(null, "Ingrese un precio válido igual o mayor que 0 o que tenga máximo dos decimales.");
             }
         }
         return precio; // Retornar el precio válido.

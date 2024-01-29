@@ -7,6 +7,7 @@ import daw.tpv.FuncionesTPV;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
 
 /**
  * Clase que representa el menú de postres en el TPV.
+ *
  * @author acebedo
  */
 public class MenuPostre {
@@ -162,22 +164,22 @@ public class MenuPostre {
 
         // Obtener un precio válido para el nuevo producto.
         double precio = obtenerPrecioValido();
-        
+
         // Establecer que el nuevo producto está en stock por defecto.
         boolean enStock = true;
-        
+
         // Solicitar al usuario que ingrese la descripción del nuevo producto.
         String descripcion = JOptionPane.showInputDialog("Ingrese la descripción del nuevo producto:");
-        
+
         // Establecer la categoría del nuevo producto como "Postre".
         String categoria = "Postre";
-        
+
         // Obtener un porcentaje de IVA válido para el nuevo producto.
         double iva = obtenerIVAValido();
-        
+
         // Obtener una subcategoría válida para el nuevo producto.
         String subcategoria = obtenerSubcategoriaValida();
-        
+
         // Obtener un nuevo ID basado en la subcategoría del nuevo producto.
         String id = obtenerNuevoID(subcategoria);
 
@@ -210,16 +212,24 @@ public class MenuPostre {
             try {
                 // Solicitar al usuario que ingrese el precio del nuevo producto.
                 precio = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio del nuevo producto:"));
-                
+
                 // Validar que el precio sea mayor o igual a 0.
                 if (precio < 0) {
                     throw new NumberFormatException();
                 }
+
+                // Validar que el número tenga como máximo dos decimales.
+                BigDecimal bd = new BigDecimal(precio);
+                bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+                if (bd.doubleValue() != precio) {
+                    throw new NumberFormatException();
+                }
+
                 // Salir del ciclo si el precio ingresado es válido.
                 break;
             } catch (NumberFormatException e) {
                 // Capturar excepción si se ingresa un valor no numérico o un precio negativo.
-                JOptionPane.showMessageDialog(null, "Ingrese un precio válido igual o mayor que 0.");
+                JOptionPane.showMessageDialog(null, "Ingrese un precio válido igual o mayor que 0 o que tenga máximo dos decimales.");
             }
         }
         return precio; // Retornar el precio válido.
@@ -231,14 +241,14 @@ public class MenuPostre {
         // Ciclo para solicitar al usuario un porcentaje de IVA válido.
         while (true) {
             try {
-                 // Solicitar al usuario que ingrese el porcentaje de IVA del nuevo producto (ejemplo: '0.10').
+                // Solicitar al usuario que ingrese el porcentaje de IVA del nuevo producto (ejemplo: '0.10').
                 iva = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el porcentaje de IVA del nuevo producto (Ej: '0.10'):"));
-                
+
                 // Validar que el porcentaje de IVA sea mayor o igual a 0.
                 if (iva < 0) {
                     throw new NumberFormatException();
                 }
-                
+
                 // Salir del ciclo si el porcentaje de IVA ingresado es válido.
                 break;
             } catch (NumberFormatException e) {
@@ -306,7 +316,7 @@ public class MenuPostre {
                     }
                 }
 
-                 // Si el ID es único, salir del bucle. De lo contrario, mostrar un mensaje de que el ID ya existe.
+                // Si el ID es único, salir del bucle. De lo contrario, mostrar un mensaje de que el ID ya existe.
                 if (!idExiste) {
                     break;
                 } else {
@@ -404,7 +414,7 @@ public class MenuPostre {
     private boolean obtenerStockValido() {
         // Define las opciones para la respuesta de stock ("Sí" o "No").
         String[] opciones = {"Sí", "No"};
-        
+
         // Muestra un cuadro de diálogo de opción con las opciones definidas.
         int eleccion = JOptionPane.showOptionDialog(
                 null,
