@@ -270,7 +270,7 @@ public class FuncionesCarrito {
     // Método para generar y mostrar un ticket de compra.
     private static void ticket() {
         // Calcular el precio final con IVA de los productos en el carrito.
-        double precioFinal = calcularPrecioTotalConIVA();
+        double precioFinal = Math.round(calcularPrecioTotalConIVA()* 100d)/100d;
         
         // Generar un ID único para el pedido
         int idPedido = generarIdPedido();
