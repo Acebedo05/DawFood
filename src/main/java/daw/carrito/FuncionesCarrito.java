@@ -12,7 +12,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Clase con las funciones relacionadas con el carrito de compras.
@@ -21,7 +23,7 @@ import java.util.List;
  */
 public class FuncionesCarrito {
 
-    private static List<Producto> carrito = new ArrayList<>();
+    private static Map<Producto, Integer> carrito = new HashMap<>();
     private static List<AtributosTarjeta> listaDeTarjetas = new ArrayList<>();
     private static List<AtributosTicket> listaDeTickets = new ArrayList<>();
 
@@ -55,8 +57,8 @@ public class FuncionesCarrito {
 
             if (cantidad > 0) {
                 for (int i = 0; i < cantidad; i++) {
-                    // Agregar el producto al carrito la cantidad especificada de veces
-                    carrito.add(producto);
+                    // Agregar el producto al carrito una vez por cada iteración
+                    carrito.put(producto, carrito.getOrDefault(producto, 0) + 1);
                 }
 
                 JOptionPane.showMessageDialog(null, cantidad + " x '" + producto.getNombre() + "' ha sido agregado al carrito.");
@@ -77,16 +79,20 @@ public class FuncionesCarrito {
             double precioTotalSinIVA = 0;
             double precioTotalConIVA = 0;
 
-            // Iterar sobre los productos en el carrito.
-            for (Producto producto : carrito) {
-                // Agregar al mensaje el nombre del producto y su precio (sin IVA)".
-                mensaje.append(producto.getNombre()).append(": ").append(producto.getPrecio()).append(" € (sin IVA)\n");
+            // Iterar sobre las entradas (producto y cantidad) en el carrito.
+            for (Map.Entry<Producto, Integer> entry : carrito.entrySet()) {
+                Producto producto = entry.getKey();
+                int cantidad = entry.getValue();
 
-                // Calcular el precio total sin IVA sumando el precio de cada producto.
-                precioTotalSinIVA += producto.getPrecio();
+                // Agregar al mensaje el nombre del producto, su cantidad y precio (sin IVA).
+                mensaje.append(producto.getNombre()).append(" (").append(cantidad).append(" unidades): ");
+                mensaje.append(producto.getPrecio() * cantidad).append(" € (sin IVA)\n");
 
-                // Calcular el precio total con IVA sumando el precio con IVA de cada producto.
-                precioTotalConIVA += producto.getPrecioConIVA();
+                // Calcular el precio total sin IVA sumando el precio de cada producto multiplicado por su cantidad.
+                precioTotalSinIVA += producto.getPrecio() * cantidad;
+
+                // Calcular el precio total con IVA sumando el precio con IVA de cada producto multiplicado por su cantidad.
+                precioTotalConIVA += producto.getPrecioConIVA() * cantidad;
             }
 
             // Agregar al mensaje el precio total sin IVA y el precio total con IVA.
@@ -260,8 +266,12 @@ public class FuncionesCarrito {
     private static double calcularPrecioTotalConIVA() {
         double precioTotalConIVA = 0;
 
-        for (Producto producto : carrito) {
-            precioTotalConIVA += producto.getPrecioConIVA();
+        for (Map.Entry<Producto, Integer> entry : carrito.entrySet()) {
+            Producto producto = entry.getKey();
+            int cantidad = entry.getValue();
+
+            // Calcular el precio total con IVA sumando el precio con IVA de cada producto multiplicado por su cantidad.
+            precioTotalConIVA += producto.getPrecioConIVA() * cantidad;
         }
 
         return precioTotalConIVA; // Devuelve el precio total con IVA
@@ -270,21 +280,25 @@ public class FuncionesCarrito {
     // Método para generar y mostrar un ticket de compra.
     private static void ticket() {
         // Calcular el precio final con IVA de los productos en el carrito.
-        double precioFinal = Math.round(calcularPrecioTotalConIVA()* 100d)/100d;
-        
+        double precioFinal = Math.round(calcularPrecioTotalConIVA() * 100d) / 100d;
+
         // Generar un ID único para el pedido
         int idPedido = generarIdPedido();
-        
+
         // Obtener la fecha y hora actual
         LocalDateTime fechaYHoraOperacion = LocalDateTime.now();
 
         // Crear una cadena para almacenar la información de los productos comprados.
         StringBuilder productosComprados = new StringBuilder("\nProductos Seleccionados:\n");
-        for (Producto producto : carrito) {
+        for (Map.Entry<Producto, Integer> entry : carrito.entrySet()) {
+            Producto producto = entry.getKey();
+            int cantidad = entry.getValue();
+
             productosComprados.append("ID: ").append(producto.getId()).append(" -- ");
             productosComprados.append("Nombre: ").append(producto.getNombre()).append(" -- ");
             productosComprados.append("Descripción: ").append(producto.getDescripcion()).append(" -- ");
             productosComprados.append("Precio: ").append(producto.getPrecio()).append(" € (sin IVA) -- ");
+            productosComprados.append("Cantidad: ").append(cantidad).append(" unidades -- ");
             productosComprados.append("IVA: ").append(producto.getIva()).append("\n");
         }
 
